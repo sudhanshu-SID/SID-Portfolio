@@ -4,7 +4,7 @@ import heroFull from "../assets/hero-full.png";
 const NameBadge = () => {
   return (
     // The absolute positioning makes it "hang" from the top of its parent container
-    <div className="flex flex-col items-center absolute left-[10%] top-[-80px] z-50">
+    <div className="flex flex-col items-center absolute -left-[10%] sm:left-[10%] top-[-80px] z-50 scale-[0.6] sm:scale-100 origin-top">
       <a href="#" className="badge-swing flex flex-col items-center cursor-pointer group">
         
         {/* 1. Lanyard Strap */}

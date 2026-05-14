@@ -120,15 +120,14 @@ export default function ScrollTextReveal({ className = '' }) {
 
         {/* ── // Intro label — top left ── */}
         <span
-          className="intro-label absolute font-dm text-base md:text-lg tracking-wide select-none cursor-pointer"
-          style={{ top: 80, left: 80 }}
+          className="intro-label absolute font-dm text-sm sm:text-base md:text-lg tracking-wide select-none cursor-pointer top-[40px] left-[20px] sm:top-[80px] sm:left-[80px] hidden sm:block"
         >
           // Intro
         </span>
 
         {/* ── Centered content — shifted right to avoid badge ── */}
         <div
-          className="h-full w-full flex items-center justify-center px-6 md:pl-[250px] lg:pl-[350px] lg:pr-12"
+          className="h-full w-full flex items-center justify-center px-6 pt-[120px] sm:pt-0 md:pl-[250px] lg:pl-[350px] lg:pr-12"
         >
           <div style={{ width: '100%', maxWidth: '52rem' }}>
 

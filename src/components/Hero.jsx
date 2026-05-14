@@ -13,7 +13,7 @@ function MarqueeStrip() {
       {Array.from({ length: REPEAT_COUNT }).map((_, i) => (
         <span
           key={i}
-          className="mx-4 md:mx-6 lg:mx-8 font-syne font-extrabold text-[clamp(4rem,12vw,10rem)] leading-none tracking-[-0.04em] uppercase select-none whitespace-nowrap hero-marquee-letter"
+          className="mx-4 md:mx-6 lg:mx-8 font-syne font-extrabold text-[clamp(3rem,10vw,10rem)] leading-none tracking-[-0.04em] uppercase select-none whitespace-nowrap hero-marquee-letter"
         >
           {MARQUEE_TEXT}
           <span className="text-accent/30 mx-4 md:mx-6 text-[0.6em]"></span>
@@ -41,7 +41,7 @@ export default function Hero() {
           alt=""
           aria-hidden="true"
           loading="eager"
-          className="absolute inset-0 w-full h-full object-cover object-center scale-105"
+          className="absolute inset-0 w-full h-full object-cover object-top sm:object-center scale-105"
         />
         {/* Dark overlay for contrast with marquee text */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/40" />
@@ -97,7 +97,7 @@ export default function Hero() {
             src={heroFull}
             alt="Portrait"
             loading="eager"
-            className="absolute inset-0 w-full h-full object-cover object-center scale-105"
+            className="absolute inset-0 w-full h-full object-cover object-top sm:object-center scale-105"
           />
         </div>
         {/* Bottom fade so the subject blends seamlessly into the page below */}
