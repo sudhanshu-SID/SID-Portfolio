@@ -3,8 +3,8 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import NameBadge from './NameBadge';
 
 /* ── colour tokens ──────────────────────────────────────────────── */
-const RED    = '#E84430';
-const WHITE  = '#FFFFFF';
+const RED = '#E84430';
+const WHITE = '#FFFFFF';
 const DIMMED = 'rgba(255,255,255,0.12)';
 
 /* ── text segments ──────────────────────────────────────────────── *
@@ -86,8 +86,8 @@ export default function ScrollTextReveal({ className = '' }) {
     offset: ['start start', 'end end'],
   });
 
-  const words     = buildWords(SEGMENTS);
-  const total     = words.length;
+  const words = buildWords(SEGMENTS);
+  const total = words.length;
 
   /*
    * h-[200vh] → 100vh of scroll while pinned.
@@ -95,14 +95,14 @@ export default function ScrollTextReveal({ className = '' }) {
    * CTA appears at 84–92%.
    * Section releases at 100% — only ~8vh of dead space after CTA.
    */
-  const START     = 0.0;
-  const END       = 0.82;
-  const range     = END - START;
+  const START = 0.0;
+  const END = 0.82;
+  const range = END - START;
   const wordSlice = range / total;
 
   /* CTA fades in right after the last word fills */
   const ctaOpacity = useTransform(scrollYProgress, [0.84, 0.92], [0, 1]);
-  const ctaY       = useTransform(scrollYProgress, [0.84, 0.92], [20, 0]);
+  const ctaY = useTransform(scrollYProgress, [0.84, 0.92], [20, 0]);
 
   return (
     <section
@@ -112,11 +112,14 @@ export default function ScrollTextReveal({ className = '' }) {
     >
       {/* Sticky frame — stays pinned for 100vh of scroll */}
       <div
-        className="sticky top-0 h-screen"
+        className="sticky top-0 h-screen w-full"
         style={{ overflow: 'clip' }}
       >
-        {/* Hanging ID Badge */}
-        <NameBadge />
+        <div className="relative w-full h-full">
+        {/* Hanging ID Badge - Hidden on mobile */}
+        <div className="hidden sm:block">
+          <NameBadge />
+        </div>
 
         {/* ── // Intro label — top left ── */}
         <span
@@ -138,7 +141,7 @@ export default function ScrollTextReveal({ className = '' }) {
             >
               {words.map((w, i) => {
                 const start = START + i * wordSlice;
-                const end   = start + wordSlice;
+                const end = start + wordSlice;
                 return (
                   <Word
                     key={`${w.word}-${i}`}
@@ -179,7 +182,7 @@ export default function ScrollTextReveal({ className = '' }) {
 
           </div>
         </div>
-
+        </div>
       </div>
     </section>
   );

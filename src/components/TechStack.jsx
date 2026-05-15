@@ -94,12 +94,18 @@ export default function TechStack() {
   const containerRef = useRef(null);
   const elementsRef = useRef([]);
   const stateRef = useRef({
-    items: TECHS.map(() => ({
-      x: 0,
-      y: 0,
-      vx: (Math.random() > 0.5 ? 1 : -1) * (0.5 + Math.random() * 0.7),
-      vy: (Math.random() > 0.5 ? 1 : -1) * (0.5 + Math.random() * 0.7),
-    })),
+    items: TECHS.map(() => {
+      const isMobile = typeof window !== 'undefined' ? window.innerWidth < 640 : false;
+      const baseSpeed = isMobile ? 0.2 : 0.5;
+      const randomSpeed = isMobile ? 0.3 : 0.7;
+      
+      return {
+        x: 0,
+        y: 0,
+        vx: (Math.random() > 0.5 ? 1 : -1) * (baseSpeed + Math.random() * randomSpeed),
+        vy: (Math.random() > 0.5 ? 1 : -1) * (baseSpeed + Math.random() * randomSpeed),
+      };
+    }),
     paused: false,
     initialized: false
   });

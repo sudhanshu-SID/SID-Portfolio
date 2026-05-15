@@ -56,7 +56,7 @@ export default function Hero() {
       </div>
 
       {/* ========== LEVEL 2 (Middle): Infinite marquee text ========== */}
-      <div className="absolute inset-0 z-10 flex items-center pointer-events-none">
+      <div className="absolute inset-0 z-10 hidden sm:flex items-center pointer-events-none">
         <div className="w-full overflow-hidden">
           <motion.div
             className="flex items-center whitespace-nowrap will-change-transform"
