@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion';
+import { RealToolsFolder } from './RealToolsFolder';
 
 const TECHS = [
   { name: 'React', icon: '⚛', color: '#61DAFB' },
@@ -26,7 +27,7 @@ const TechCard = ({ t, reducedMotion }) => {
     const r = cardRef.current.getBoundingClientRect();
     const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
     const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
-    setTransformStyle(`perspective(750px) rotateX(${-dy * 15}deg) rotateY(${dx * 15}deg) scale(1.07) translateZ(10px)`);
+    setTransformStyle(`perspective(750px) rotateX(${-dy * 15}deg) rotateY(${dx * 15}deg) scale(1.05) translateZ(10px)`);
   };
 
   const handleMouseEnter = () => setIsHovered(true);
@@ -38,41 +39,74 @@ const TechCard = ({ t, reducedMotion }) => {
   return (
     <div
       ref={cardRef}
-      className="tech-card relative w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] rounded-[18px] flex flex-col items-center justify-center gap-[8px] overflow-hidden cursor-pointer"
+      className="tech-card relative w-[75px] h-[60px] sm:w-[100px] sm:h-[80px] lg:w-[120px] lg:h-[96px] cursor-pointer"
       style={{
-        '--c': t.color,
-        background: 'rgba(255,255,255,0.028)',
-        border: `1px solid ${isHovered ? t.color + '55' : 'rgba(255,255,255,0.07)'}`,
-        boxShadow: isHovered ? `0 0 0 1px ${t.color}44, 0 24px 64px rgba(0,0,0,.65), inset 0 0 30px rgba(255,255,255,.02)` : 'none',
         transform: transformStyle,
-        transition: isHovered ? 'border-color .3s ease, box-shadow .3s ease' : 'border-color .35s ease, box-shadow .35s ease, transform .45s cubic-bezier(.34,1.4,.64,1)'
+        transition: isHovered ? 'transform .1s ease' : 'transform .45s cubic-bezier(.34,1.4,.64,1)',
+        zIndex: isHovered ? 50 : 1, // bring to front on hover
       }}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="card-top-edge absolute top-0 left-[12%] right-[12%] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      {/* 3D Folder Container */}
       <div
-        className={`orb absolute w-[70px] h-[70px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-[58%] pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-45' : 'opacity-0'}`}
-        style={{ background: `radial-gradient(circle, ${t.color} 0%, transparent 70%)` }}
-      />
-      <div
-        className={`shine absolute inset-0 rounded-[18px] pointer-events-none transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
-        style={{ background: 'linear-gradient(118deg, transparent 30%, rgba(255,255,255,0.055) 50%, transparent 70%)' }}
-      />
-      <div
-        className={`tag absolute bottom-0 left-0 right-0 h-[3px] rounded-b-[18px] transition-opacity duration-300 ${isHovered ? 'opacity-70' : 'opacity-0'}`}
-        style={{ background: t.color }}
-      />
-
-      <div
-        className={`card-icon font-dm font-medium text-[22px] sm:text-[26px] leading-none select-none relative z-10 transition-transform duration-300 ${isHovered ? 'scale-110 -translate-y-[2px]' : ''}`}
-        style={{ color: t.color || 'rgba(255,255,255,0.8)' }}
+        className="absolute inset-0 w-full h-full"
+        style={{
+          filter: isHovered 
+            ? `drop-shadow(0 12px 24px ${t.color}50)` 
+            : "drop-shadow(0 4px 8px rgba(0,0,0,0.5))",
+          perspective: "400px",
+        }}
       >
-        {t.icon}
-      </div>
-      <div className={`card-name font-dm text-[9px] tracking-[0.12em] uppercase relative z-10 transition-colors duration-300 ${isHovered ? 'text-white/70' : 'text-white/30'}`}>
-        {t.name}
+        {/* Layer 1: BACK OF FOLDER (Glassy Dark) */}
+        <svg viewBox="0 0 96 80" className="absolute inset-0 w-full h-full drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
+          {/* Main back shape with folder tab */}
+          <rect x="0" y="12" width="96" height="68" rx="6" fill="rgba(25,30,40,0.8)" />
+          <path d="M0 20 C0 14.5, 4.5 10, 10 10 L35 10 Q39 10, 41 6 Q43 2, 47 2 L86 2 Q94 2, 96 10 L96 20 L0 20 Z" fill="rgba(25,30,40,0.8)" />
+          {/* Inner dark pocket */}
+          <rect x="2" y="18" width="92" height="60" rx="4" fill="rgba(5,10,15,0.6)" />
+        </svg>
+
+        {/* Ambient Glow inside folder */}
+        <div 
+          className={`absolute inset-0 top-4 rounded-b-lg opacity-0 transition-opacity duration-300 pointer-events-none ${isHovered ? 'opacity-100' : ''}`}
+          style={{ background: `radial-gradient(circle at center, ${t.color}40 0%, transparent 70%)` }}
+        />
+
+        {/* Layer 2: INNER CONTENT (Tech Icon) */}
+        <div className="absolute inset-0 top-5 bottom-2 flex flex-col items-center justify-center pointer-events-none">
+          <div
+            className={`card-icon font-dm font-bold text-[20px] sm:text-[28px] lg:text-[36px] leading-none transition-transform duration-300 origin-bottom ${isHovered ? '-translate-y-4 sm:-translate-y-6 scale-125' : 'scale-100'}`}
+            style={{ 
+              color: t.color || 'rgba(255,255,255,0.8)',
+              textShadow: isHovered ? `0 0 20px ${t.color}` : 'none'
+            }}
+          >
+            {t.icon}
+          </div>
+        </div>
+
+        {/* Layer 3: FRONT COVER (Clear glass flap) */}
+        <motion.div
+          className="absolute left-[1px] right-[1px] bottom-[1px] h-[75%] rounded-[6px] flex items-end justify-center pb-2.5 overflow-hidden"
+          style={{
+            background: "linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%)",
+            border: "1px solid rgba(255,255,255,0.05)",
+            borderTop: `1px solid ${isHovered ? t.color : 'rgba(255,255,255,0.2)'}`,
+            boxShadow: isHovered ? `0 -2px 20px ${t.color}60, inset 0 1px 0 rgba(255,255,255,0.1)` : "inset 0 1px 0 rgba(255,255,255,0.05)",
+            transformOrigin: "bottom center",
+          }}
+          animate={{ rotateX: isHovered ? -35 : 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        >
+          {/* Subtle shine on the folder front */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-50" />
+          
+          <div className={`card-name font-dm text-[7px] sm:text-[9px] tracking-[0.1em] sm:tracking-[0.15em] uppercase relative z-10 transition-colors duration-300 ${isHovered ? 'text-white' : 'text-white/50'}`}>
+            {t.name}
+          </div>
+        </motion.div>
       </div>
     </div>
   );
@@ -90,84 +124,8 @@ export default function TechStack() {
     mouseY.set(clientY - top);
   }
 
-  // Physics simulation refs
-  const containerRef = useRef(null);
-  const elementsRef = useRef([]);
-  const stateRef = useRef({
-    items: TECHS.map(() => {
-      const isMobile = typeof window !== 'undefined' ? window.innerWidth < 640 : false;
-      const baseSpeed = isMobile ? 0.2 : 0.5;
-      const randomSpeed = isMobile ? 0.3 : 0.7;
-      
-      return {
-        x: 0,
-        y: 0,
-        vx: (Math.random() > 0.5 ? 1 : -1) * (baseSpeed + Math.random() * randomSpeed),
-        vy: (Math.random() > 0.5 ? 1 : -1) * (baseSpeed + Math.random() * randomSpeed),
-      };
-    }),
-    paused: false,
-    initialized: false
-  });
+  // Fixed layout, no physics needed
 
-  useEffect(() => {
-    let animationFrameId;
-
-    const loop = () => {
-      if (containerRef.current) {
-        const box = containerRef.current.getBoundingClientRect();
-        const boxW = box.width;
-        const boxH = box.height;
-
-        // Initialize random starting positions on first frame
-        if (!stateRef.current.initialized && boxW > 0) {
-          stateRef.current.items.forEach(item => {
-            item.x = Math.random() * Math.max(0, boxW - 120);
-            item.y = Math.random() * Math.max(0, boxH - 120);
-          });
-          stateRef.current.initialized = true;
-        }
-
-        if (!stateRef.current.paused && stateRef.current.initialized && !reducedMotion) {
-          stateRef.current.items.forEach((item, i) => {
-            const el = elementsRef.current[i];
-            if (!el) return;
-
-            const elW = el.offsetWidth || 120;
-            const elH = el.offsetHeight || 120;
-
-            item.x += item.vx;
-            item.y += item.vy;
-
-            // Bounce X against container
-            if (item.x <= 0) {
-              item.x = 0;
-              item.vx *= -1;
-            } else if (item.x + elW >= boxW) {
-              item.x = boxW - elW;
-              item.vx *= -1;
-            }
-
-            // Bounce Y against container
-            if (item.y <= 0) {
-              item.y = 0;
-              item.vy *= -1;
-            } else if (item.y + elH >= boxH) {
-              item.y = boxH - elH;
-              item.vy *= -1;
-            }
-
-            // High performance transform
-            el.style.transform = `translate3d(${item.x}px, ${item.y}px, 0)`;
-          });
-        }
-      }
-      animationFrameId = requestAnimationFrame(loop);
-    };
-
-    loop();
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [reducedMotion]);
 
   return (
     <section
@@ -239,25 +197,19 @@ export default function TechStack() {
             <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-[#27C93F] border border-black/20" />
           </div>
 
-          {/* Simulation Area */}
-          <div 
-            ref={containerRef}
-            className="absolute inset-0"
-            onMouseEnter={() => { stateRef.current.paused = true; }}
-            onMouseLeave={() => { stateRef.current.paused = false; }}
-            onTouchStart={() => { stateRef.current.paused = true; }}
-            onTouchEnd={() => { stateRef.current.paused = false; }}
-          >
-            {TECHS.map((t, i) => (
-              <div
-                key={t.name}
-                ref={el => elementsRef.current[i] = el}
-                className="absolute top-0 left-0 will-change-transform"
-              >
-                <TechCard t={t} reducedMotion={reducedMotion} />
-              </div>
-            ))}
+          {/* Desktop Area - Fixed Grid on the left */}
+          <div className="absolute inset-0 p-6 sm:p-8 lg:p-12 pl-4 sm:pl-8 flex justify-start overflow-y-auto pb-32 sm:pb-12">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 content-start">
+              {TECHS.map((t) => (
+                <div key={t.name}>
+                  <TechCard t={t} reducedMotion={reducedMotion} />
+                </div>
+              ))}
+            </div>
           </div>
+          
+          {/* Secret AI Tools Folder — hover to reveal */}
+          <RealToolsFolder />
         </div>
         
         {/* Laptop Base Indicator */}
