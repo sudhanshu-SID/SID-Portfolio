@@ -1,5 +1,6 @@
 import React from "react";
-import heroFull from "../assets/hero-full.png";
+import badgeImg from "../assets/badge.png";
+import hoverImg from "../assets/hover image.jpeg";
 
 const NameBadge = () => {
   return (
@@ -108,20 +109,18 @@ const NameBadge = () => {
                 >
                   {/* Default Profile Image */}
                   <img
-                    src={heroFull}
+                    src={badgeImg}
                     alt="Profile"
                     className="w-full h-full object-cover group-hover:opacity-0 transition-opacity duration-300"
                     draggable={false}
                   />
                   
-                  {/* Hover Video Effect */}
-                  <video
-                    src="https://cdn.pixabay.com/video/2023/10/22/186001-876931548_large.mp4"
-                    muted
-                    loop
-                    playsInline
-                    autoPlay
+                  {/* Hover Image Effect */}
+                  <img
+                    src={hoverImg}
+                    alt="Hover Profile"
                     className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    draggable={false}
                   />
                 </div>
               </div>
