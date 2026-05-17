@@ -3,6 +3,7 @@ import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-moti
 import ScrollProgress from './components/ScrollProgress.jsx';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
+import MobileHero from './components/MobileHero.jsx';
 import ScrollTextReveal from './components/ScrollTextReveal.jsx';
 import TechStack from './components/TechStack.jsx';
 import Projects from './components/Projects.jsx';
@@ -65,6 +66,7 @@ export default function App() {
       <ScrollProgress />
       <Navbar />
       <main>
+        <MobileHero />
         <Hero />
         <ScrollTextReveal />
         <TechStack />

@@ -32,7 +32,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full h-screen overflow-hidden bg-black"
+      className="relative w-full h-screen overflow-hidden bg-black hidden sm:block"
     >
       {/* ========== LEVEL 1 (Bottom): Background portrait + gradient ========== */}
       <div className="absolute inset-0 z-0">

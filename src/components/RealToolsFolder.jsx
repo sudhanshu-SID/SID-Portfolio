@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import coffeeImg from "../assets/ice coffee.png";
 
@@ -24,6 +24,15 @@ const realStack = [
    ────────────────────────────────────────────── */
 export function RealToolsFolder() {
   const [hovered, setHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <>
       {/* Mobile Overlay */}
@@ -34,7 +43,7 @@ export function RealToolsFolder() {
         />
       )}
       
-      <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 scale-[0.65] sm:scale-100 origin-bottom-right">
+      <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 scale-[0.45] sm:scale-100 origin-bottom-right">
         <motion.div
           onMouseEnter={() => { if (typeof window !== "undefined" && window.innerWidth >= 640) setHovered(true); }}
           onMouseLeave={() => { if (typeof window !== "undefined" && window.innerWidth >= 640) setHovered(false); }}
@@ -73,7 +82,11 @@ export function RealToolsFolder() {
         </svg>
 
         {/* Layer 2: INNER CONTENT — AI Agents + Coffee popping out */}
-        <div className="absolute left-0 right-0 bottom-4 flex justify-center items-center pointer-events-none z-10">
+        <motion.div 
+          className="absolute left-0 right-0 bottom-4 flex justify-center items-center pointer-events-none z-10 origin-bottom"
+          animate={{ scale: hovered ? (isMobile ? 1.75 : 1) : 1 }}
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        >
           {realStack.map((tool, i) => {
             const isCoffee = tool.name === "Coffee";
             
@@ -147,7 +160,7 @@ export function RealToolsFolder() {
               </motion.span>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Layer 3: FRONT COVER (Tilts open) */}
         <motion.div

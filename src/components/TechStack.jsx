@@ -39,7 +39,7 @@ const TechCard = ({ t, reducedMotion }) => {
   return (
     <div
       ref={cardRef}
-      className="tech-card relative w-[75px] h-[60px] sm:w-[100px] sm:h-[80px] lg:w-[120px] lg:h-[96px] cursor-pointer"
+      className="tech-card relative flex flex-col items-center w-[75px] sm:w-[100px] lg:w-[120px] cursor-pointer"
       style={{
         transform: transformStyle,
         transition: isHovered ? 'transform .1s ease' : 'transform .45s cubic-bezier(.34,1.4,.64,1)',
@@ -51,10 +51,10 @@ const TechCard = ({ t, reducedMotion }) => {
     >
       {/* 3D Folder Container */}
       <div
-        className="absolute inset-0 w-full h-full"
+        className="relative w-full h-[60px] sm:h-[80px] lg:h-[96px]"
         style={{
-          filter: isHovered 
-            ? `drop-shadow(0 12px 24px ${t.color}50)` 
+          filter: isHovered
+            ? `drop-shadow(0 12px 24px ${t.color}50)`
             : "drop-shadow(0 4px 8px rgba(0,0,0,0.5))",
           perspective: "400px",
         }}
@@ -69,7 +69,7 @@ const TechCard = ({ t, reducedMotion }) => {
         </svg>
 
         {/* Ambient Glow inside folder */}
-        <div 
+        <div
           className={`absolute inset-0 top-4 rounded-b-lg opacity-0 transition-opacity duration-300 pointer-events-none ${isHovered ? 'opacity-100' : ''}`}
           style={{ background: `radial-gradient(circle at center, ${t.color}40 0%, transparent 70%)` }}
         />
@@ -78,7 +78,7 @@ const TechCard = ({ t, reducedMotion }) => {
         <div className="absolute inset-0 top-5 bottom-2 flex flex-col items-center justify-center pointer-events-none">
           <div
             className={`card-icon font-dm font-bold text-[20px] sm:text-[28px] lg:text-[36px] leading-none transition-transform duration-300 origin-bottom ${isHovered ? '-translate-y-4 sm:-translate-y-6 scale-125' : 'scale-100'}`}
-            style={{ 
+            style={{
               color: t.color || 'rgba(255,255,255,0.8)',
               textShadow: isHovered ? `0 0 20px ${t.color}` : 'none'
             }}
@@ -102,11 +102,17 @@ const TechCard = ({ t, reducedMotion }) => {
         >
           {/* Subtle shine on the folder front */}
           <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-50" />
-          
-          <div className={`card-name font-dm text-[7px] sm:text-[9px] tracking-[0.1em] sm:tracking-[0.15em] uppercase relative z-10 transition-colors duration-300 ${isHovered ? 'text-white' : 'text-white/50'}`}>
+
+          {/* Desktop-only label inside the flap */}
+          <div className={`hidden sm:block card-name font-dm text-[9px] tracking-[0.15em] uppercase relative z-10 transition-colors duration-300 ${isHovered ? 'text-white' : 'text-white/50'}`}>
             {t.name}
           </div>
         </motion.div>
+      </div>
+
+      {/* Mobile-only label below the folder */}
+      <div className={`block sm:hidden mt-2 text-center font-dm text-[8px] tracking-[0.1em] uppercase transition-colors duration-300 ${isHovered ? 'text-white font-bold drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' : 'text-white/40'}`}>
+        {t.name}
       </div>
     </div>
   );
@@ -160,7 +166,7 @@ export default function TechStack() {
         transition={{ duration: 0.7, delay: 0.1 }}
         className="font-dm text-[10px] tracking-[0.26em] text-white/30 uppercase mb-[22px] relative z-10"
       >
-        
+
       </motion.p>
 
       <motion.h2
@@ -177,7 +183,7 @@ export default function TechStack() {
       </motion.h2>
 
       {/* Laptop / Screen Container */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -186,10 +192,10 @@ export default function TechStack() {
       >
         {/* Screen Glare */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] via-transparent to-transparent pointer-events-none" />
-        
+
         {/* Internal Frame */}
         <div className="absolute inset-2 sm:inset-4 rounded-[18px] sm:rounded-[24px] border border-black/50 bg-[#050505] overflow-hidden">
-          
+
           {/* macOS window controls */}
           <div className="absolute top-3 sm:top-4 left-4 sm:left-5 flex items-center gap-2 z-20 pointer-events-none">
             <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-[#FF5F56] border border-black/20" />
@@ -198,7 +204,7 @@ export default function TechStack() {
           </div>
 
           {/* Desktop Area - Fixed Grid on the left */}
-          <div className="absolute inset-0 p-6 sm:p-8 lg:p-12 pl-4 sm:pl-8 flex justify-start overflow-y-auto pb-32 sm:pb-12">
+          <div className="absolute inset-0 p-6 sm:p-8 lg:p-12 pl-4 sm:pl-8 flex justify-start overflow-y-auto pb-56 sm:pb-12">
             <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 content-start">
               {TECHS.map((t) => (
                 <div key={t.name}>
@@ -207,11 +213,11 @@ export default function TechStack() {
               ))}
             </div>
           </div>
-          
+
           {/* Secret AI Tools Folder — hover to reveal */}
           <RealToolsFolder />
         </div>
-        
+
         {/* Laptop Base Indicator */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[150px] sm:w-[200px] h-[4px] sm:h-[6px] bg-white/10 rounded-t-lg" />
       </motion.div>
