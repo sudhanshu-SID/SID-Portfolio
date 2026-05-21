@@ -193,3 +193,34 @@ a {
 .intro-label:hover::after {
   width: 100%;
 }
+
+/* Glowing line for mobile menu footer */
+.glowing-line {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(232, 68, 48, 0.1) 0%, var(--accent) 50%, rgba(232, 68, 48, 0.1) 100%);
+  position: relative;
+}
+
+.glowing-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  filter: blur(6px);
+  opacity: 0.6;
+  animation: glowing-line-pulse 3s infinite ease-in-out;
+}
+
+@keyframes glowing-line-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    filter: blur(4px);
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.9;
+    filter: blur(8px);
+    transform: scaleY(1.5);
+  }
+}
+
