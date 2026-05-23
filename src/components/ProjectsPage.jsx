@@ -3,12 +3,12 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 // ── Project images ──────────────────────────────────────
-import imgYumeCav from '../assets/Project-yumecav.png';
-import imgIdealFirm from '../assets/Project-TheidealFirm.png';
-import imgRideWheelz from '../assets/Project-RizeWheelz.png';
-import imgCountryWheels from '../assets/Project-countryWheels.png';
-import imgTredit from '../assets/Project-Tredit.png';
-import imgNutriPlan from '../assets/project- nutriplan.png';
+import imgYumeCav from '../assets/Project-yumecav.webp';
+import imgIdealFirm from '../assets/Project-TheidealFirm.webp';
+import imgRideWheelz from '../assets/Project-RizeWheelz.webp';
+import imgCountryWheels from '../assets/Project-countryWheels.webp';
+import imgTredit from '../assets/Project-Tredit.webp';
+import imgNutriPlan from '../assets/project-nutriplan.webp';
 
 const allProjects = [
   {
