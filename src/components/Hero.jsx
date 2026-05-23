@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import heroFull from '../assets/hero-full.png';
 
 // The marquee text — repeated enough to fill wide screens
@@ -25,6 +25,8 @@ function MarqueeStrip() {
 
 export default function Hero() {
   const reducedMotion = useReducedMotion();
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, (val) => val * 0.5);
 
   // Enough shift for one full strip to scroll off, creating a seamless loop
   const marqueeShift = -3200;
@@ -32,8 +34,9 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full h-screen overflow-hidden bg-black hidden sm:block"
+      className="sticky top-0 w-full h-screen overflow-hidden bg-black hidden sm:block z-0"
     >
+      <motion.div style={{ y }} className="absolute inset-0 w-full h-full will-change-transform">
       {/* ========== LEVEL 1 (Bottom): Background portrait + gradient ========== */}
       <div className="absolute inset-0 z-0">
         <img
@@ -147,6 +150,7 @@ export default function Hero() {
           boxShadow: 'inset 0 0 150px 60px rgba(0,0,0,0.6)',
         }}
       />
+      </motion.div>
     </section>
   );
 }

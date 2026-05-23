@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import badgeImg from "../assets/badge.png";
 import hoverImg from "../assets/hover image.jpeg";
 
 const NameBadge = () => {
+  const mouseX = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 60, damping: 18 });
+  const rotateXVal = useTransform(springX, [-80, 80], [-5, 5]);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const ratio = (e.clientX / window.innerWidth) * 2 - 1; // Range: [-1, 1]
+
+      let maxShift = 80;
+      if (window.innerWidth < 768) {
+        maxShift = 30;
+      } else if (window.innerWidth < 1024) {
+        maxShift = 50;
+      }
+
+      mouseX.set(ratio * maxShift);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX]);
+
   return (
     // The absolute positioning makes it "hang" from the top of its parent container
-    <div className="flex flex-col items-center absolute -left-[10%] sm:left-[10%] top-[-80px] z-50 scale-[0.6] sm:scale-100 origin-top">
+    <motion.div
+      style={{ x: springX, rotate: rotateXVal }}
+      className="flex flex-col items-center absolute -left-[10%] sm:left-[2%] md:left-[4%] lg:left-[8%] xl:left-[10%] top-[-80px] z-50 scale-[0.6] sm:scale-[0.55] md:scale-[0.7] lg:scale-[0.85] xl:scale-100 origin-top"
+    >
       <a href="#" className="badge-swing flex flex-col items-center cursor-pointer group">
-        
+
         {/* 1. Lanyard Strap */}
         <div className="w-[26px] h-[240px] bg-stone-800 relative shadow-sm z-0">
           <div
@@ -23,7 +49,7 @@ const NameBadge = () => {
 
         {/* 2. Badge Card Wrapper (Perspective creates the 3D depth) */}
         <div className="rounded-xl w-[210px] -mt-8 relative" style={{ perspective: "800px" }}>
-          
+
           {/* Main Card Body */}
           <div
             className="rounded-xl p-[6px] relative"
@@ -44,10 +70,10 @@ const NameBadge = () => {
                 background: "linear-gradient(115deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 15%, transparent 40%, transparent 85%, rgba(255,255,255,0.03) 100%)",
               }}
             />
-            
+
             {/* Lanyard pass-through behind card */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[26px] h-[22px] bg-stone-800 z-0 rounded-b-sm" />
-            
+
             {/* Slot hole cutout */}
             <div className="relative z-10 flex justify-center pt-1 pb-0">
               <div
@@ -82,7 +108,7 @@ const NameBadge = () => {
                     backgroundSize: "18px 18px",
                   }}
                 />
-                
+
                 {/* Text Content */}
                 <div className="relative z-10">
                   <h3 className="text-white font-extrabold text-[28px] leading-[1.05] tracking-[0.15em]">
@@ -114,7 +140,7 @@ const NameBadge = () => {
                     className="w-full h-full object-cover group-hover:opacity-0 transition-opacity duration-300"
                     draggable={false}
                   />
-                  
+
                   {/* Hover Image Effect */}
                   <img
                     src={hoverImg}
@@ -144,7 +170,7 @@ const NameBadge = () => {
         }
       `
       }} />
-    </div>
+    </motion.div>
   );
 };
 

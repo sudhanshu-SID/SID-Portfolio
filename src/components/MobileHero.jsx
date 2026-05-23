@@ -1,17 +1,21 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import catDance from '../assets/cat-dance.gif';
 import earbuds from '../assets/earbuds.png';
 import badgeImg from '../assets/badge.png';
 import hoverImg from '../assets/hover image.jpeg';
 
 export default function MobileHero() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, (val) => val * 0.5);
+
   return (
     <>
       <section
         id="mobile-hero"
-        className="sm:hidden relative w-full h-[100dvh] overflow-hidden bg-black flex flex-col"
+        className="sm:hidden sticky top-0 w-full h-[100dvh] overflow-hidden bg-black z-0"
       >
+        <motion.div style={{ y }} className="absolute inset-0 w-full h-full flex flex-col will-change-transform">
         {/* ═══════ Background Layer ═══════ */}
         <div className="absolute inset-0 z-0">
           {/* Deep dark gradient canvas */}
@@ -262,6 +266,7 @@ export default function MobileHero() {
           className="absolute inset-0 z-[5] pointer-events-none"
           style={{ boxShadow: 'inset 0 0 120px 40px rgba(0,0,0,0.9)' }}
         />
+        </motion.div>
       </section>
 
       {/* ═══════ Embedded Styles ═══════ */}
