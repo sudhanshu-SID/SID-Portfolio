@@ -158,7 +158,7 @@ a {
 }
 
 /* Project hover reveal section */
-#work a.group::before {
+#projects a.group::before {
   content: '';
   position: absolute;
   left: 0;
@@ -169,7 +169,7 @@ a {
   transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-#work a.group:hover::before {
+#projects a.group:hover::before {
   width: 100%;
 }
 
@@ -177,13 +177,16 @@ a {
 .intro-label {
   color: #E84430;
   position: relative;
+  display: inline-block;
+  min-width: 140px;
+  padding-bottom: 4px;
 }
 
 .intro-label::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -4px;
+  bottom: 0;
   width: 0;
   height: 2px;
   background: #E84430;

@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { Link } from 'react-router-dom';
+
+const MotionLink = motion(Link);
 
 export default function Navbar() {
   const { scrollY } = useScroll();
@@ -10,9 +13,8 @@ export default function Navbar() {
 
   const navItems = useMemo(
     () => [
-      { label: 'WORK', id: 'work' },
-      { label: 'SERVICES', id: 'services' },
-      { label: 'ABOUT', id: 'about' },
+      { label: 'PROJECTS', id: 'projects', path: '/projects' },
+      { label: 'KNOW ME', id: 'knowme' },
       { label: 'CONTACT', id: 'contact' },
     ],
     [],
@@ -111,19 +113,32 @@ export default function Navbar() {
           </a>
 
           <div className="hidden lg:flex items-center gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToId(item.id);
-                }}
-                className="relative font-dm text-sm tracking-[0.05em] text-white/90 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-accent after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100"
-              >
-                {item.label}
-              </a>
-            ))}
+            {navItems.map((item) => {
+              if (item.path) {
+                return (
+                  <Link
+                    key={item.id}
+                    to={item.path}
+                    className="relative font-dm text-sm tracking-[0.05em] text-white/90 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-accent after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100"
+                  >
+                    {item.label}
+                  </Link>
+                );
+              }
+              return (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToId(item.id);
+                  }}
+                  className="relative font-dm text-sm tracking-[0.05em] text-white/90 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-accent after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100"
+                >
+                  {item.label}
+                </a>
+              );
+            })}
           </div>
 
           {/* Animated Hamburger/Cross Menu Button */}
@@ -171,16 +186,22 @@ export default function Navbar() {
               {navItems.map((item, index) => {
                 const num = String(index + 1).padStart(2, '0');
                 const isActive = hoveredIndex === index;
+                const Component = item.path ? MotionLink : motion.a;
+                const linkProps = item.path
+                  ? { to: item.path, onClick: () => setOpen(false) }
+                  : {
+                      href: `#${item.id}`,
+                      onClick: (e) => {
+                        e.preventDefault();
+                        setOpen(false);
+                        scrollToId(item.id);
+                      },
+                    };
                 return (
-                  <motion.a
+                  <Component
                     key={item.id}
                     variants={itemVariants}
-                    href={`#${item.id}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setOpen(false);
-                      scrollToId(item.id);
-                    }}
+                    {...linkProps}
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                     onTouchStart={() => setHoveredIndex(index)}
@@ -231,7 +252,7 @@ export default function Navbar() {
                       className="absolute inset-0 bg-gradient-to-r from-accent/[0.04] via-transparent to-transparent pointer-events-none transition-opacity duration-300"
                       style={{ opacity: isActive ? 1 : 0 }}
                     />
-                  </motion.a>
+                  </Component>
                 );
               })}
             </div>

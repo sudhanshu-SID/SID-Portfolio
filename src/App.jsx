@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ReactLenis } from 'lenis/react';
 import ScrollProgress from './components/ScrollProgress.jsx';
 import Navbar from './components/Navbar.jsx';
@@ -8,8 +9,10 @@ import MobileHero from './components/MobileHero.jsx';
 import ScrollTextReveal from './components/ScrollTextReveal.jsx';
 import TechStack from './components/TechStack.jsx';
 import Projects from './components/Projects.jsx';
+import KnowMe from './components/KnowMe.jsx';
 import Testimonials from './components/Testimonials.jsx';
 import Footer from './components/Footer.jsx';
+import ProjectsPage from './components/ProjectsPage.jsx';
 
 function CursorFX() {
   const reducedMotion = useReducedMotion();
@@ -50,34 +53,47 @@ function CursorFX() {
   );
 }
 
-export default function App() {
+function HomePage() {
   return (
-    <ReactLenis root>
-      <div className="min-h-screen bg-[#000000] text-[#F5F5F5] relative" style={{ overflowX: 'clip' }}>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage:
-              'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)',
-            backgroundSize: '72px 72px',
-            maskImage: 'radial-gradient(circle at 30% 20%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 100%)',
-          }}
-        />
-        <CursorFX />
-        <ScrollProgress />
-        <Navbar />
-        <main>
-          <MobileHero />
-          <Hero />
-          <ScrollTextReveal />
-          <TechStack />
-          <Projects />
-          <Testimonials />
-          <Footer />
-        </main>
-      </div>
-    </ReactLenis>
+    <>
+      <ScrollProgress />
+      <Navbar />
+      <main>
+        <MobileHero />
+        <Hero />
+        <ScrollTextReveal />
+        <TechStack />
+        <Projects />
+        <KnowMe />
+        {/* <Testimonials /> */}
+        <Footer />
+      </main>
+    </>
   );
 }
 
+export default function App() {
+  return (
+    <BrowserRouter>
+      <ReactLenis root>
+        <div className="min-h-screen bg-[#000000] text-[#F5F5F5] relative" style={{ overflowX: 'clip' }}>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              backgroundImage:
+                'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)',
+              backgroundSize: '72px 72px',
+              maskImage: 'radial-gradient(circle at 30% 20%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 100%)',
+            }}
+          />
+          <CursorFX />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+          </Routes>
+        </div>
+      </ReactLenis>
+    </BrowserRouter>
+  );
+}

@@ -83,7 +83,7 @@ export default function ScrollTextReveal({ className = '' }) {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start start', 'end end'],
+    offset: ['start end', 'end end'],
   });
 
   const words = buildWords(SEGMENTS);
@@ -95,20 +95,20 @@ export default function ScrollTextReveal({ className = '' }) {
    * CTA appears at 84–92%.
    * Section releases at 100% — only ~8vh of dead space after CTA.
    */
-  const START = 0.0;
-  const END = 0.82;
+  const START = 0.10;
+  const END = 0.40;
   const range = END - START;
   const wordSlice = range / total;
 
   /* CTA fades in right after the last word fills */
-  const ctaOpacity = useTransform(scrollYProgress, [0.84, 0.92], [0, 1]);
-  const ctaY = useTransform(scrollYProgress, [0.84, 0.92], [20, 0]);
+  const ctaOpacity = useTransform(scrollYProgress, [0.42, 0.50], [0, 1]);
+  const ctaY = useTransform(scrollYProgress, [0.42, 0.50], [20, 0]);
 
   return (
     <section
       ref={containerRef}
       id="intro"
-      className={`relative z-10 h-[200vh] bg-black ${className}`}
+      className={`relative z-10 h-[300vh] bg-black ${className}`}
     >
       {/* Sticky frame — stays pinned for 100vh of scroll */}
       <div
@@ -164,10 +164,10 @@ export default function ScrollTextReveal({ className = '' }) {
               className="mt-10"
             >
               <a
-                href="#work"
+                href="#projects"
                 className="group inline-flex items-center gap-2 px-7 py-3 rounded-full border border-white/15 text-white/60 text-sm font-dm tracking-wide hover:border-white/40 hover:text-white transition-all duration-300"
               >
-                See my Work
+                See my Projects
                 <svg
                   className="w-4 h-4 translate-x-0 group-hover:translate-x-1 transition-transform duration-300"
                   fill="none"

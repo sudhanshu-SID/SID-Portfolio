@@ -6,15 +6,17 @@ export default function Footer() {
   const reducedMotion = useReducedMotion();
 
   return (
-    <motion.section
+    <section
       id="contact"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-      viewport={{ once: false, amount: 0.2 }}
-      className="py-40 lg:py-56"
+      className="py-40 lg:py-56 bg-[#000000] z-30 relative"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+        viewport={{ once: true, amount: 0.1 }}
+        className="max-w-7xl mx-auto px-6 lg:px-12"
+      >
         {/* Row 1: Massive CTA */}
         <div className="flex items-end justify-between gap-10">
           <div className="font-syne font-extrabold text-[clamp(3rem,6.5vw,8rem)] leading-[0.95] tracking-tighter3 text-white">
@@ -78,8 +80,8 @@ export default function Footer() {
             </a>
           </div>
         </div>
-      </div>
-    </motion.section>
+      </motion.div>
+    </section>
   );
 }
 

@@ -1,39 +1,78 @@
 import React, { useState, useRef } from 'react';
 import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 // ── Project images ──────────────────────────────────────
-import imgArtVault from '../assets/project-artvault.png';
-import imgWanderLog from '../assets/project-wanderlog.png';
-import imgDataPulse from '../assets/project-datapulse.png';
+import imgYumeCav from '../assets/Project-yumecav.png';
+import imgIdealFirm from '../assets/Project-TheidealFirm.png';
+import imgRideWheelz from '../assets/Project-RizeWheelz.png';
+import imgCountryWheels from '../assets/Project-countryWheels.png';
+import imgTredit from '../assets/Project-Tredit.png';
+import imgNutriPlan from '../assets/project-nutriplan.png';
 
 // ── Project data ────────────────────────────────────────
 const projects = [
   {
     id: '01',
-    title: 'ArtVault',
-    year: '2024',
-    category: 'E-commerce · Art Platform',
-    tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+    title: 'YumeCav',
+    year: '2025',
+    category: 'E-commerce · Posters & Stickers',
+    tech: ['React', 'TypeScript', 'Supabase', 'Razorpay'],
     href: '#',
-    image: imgArtVault,
+    image: imgYumeCav,
+    description: 'Fully customised high-quality posters & stickers e-commerce platform with aesthetic GenZ-targeted design, B2B support, Razorpay payments & Shiprocket logistics.',
   },
   {
     id: '02',
-    title: 'WanderLog',
-    year: '2024',
-    category: 'SaaS · Travel · Journaling',
-    tech: ['React', 'Supabase', 'Framer Motion', 'MapboxGL'],
+    title: 'The Ideal Firm',
+    year: '2025',
+    category: 'Corporate · Digital Marketing',
+    tech: ['React', 'TypeScript'],
     href: '#',
-    image: imgWanderLog,
+    image: imgIdealFirm,
+    description: 'Static corporate site showcasing digital marketing services with WhatsApp & form integration for seamless client inquiries.',
   },
   {
     id: '03',
-    title: 'DataPulse',
+    title: 'RideWheelz',
     year: '2025',
-    category: 'Dashboard · Data Viz',
-    tech: ['React', 'Zustand', 'WebSocket', 'Recharts'],
+    category: 'Vehicle Rental · Travel',
+    tech: ['WordPress', 'PHP', 'CSS'],
     href: '#',
-    image: imgDataPulse,
+    image: imgRideWheelz,
+    description: 'Vehicle rental platform with integrated travel plans, built for a self-drive rental business in Guwahati.',
+  },
+  {
+    id: '04',
+    title: 'The Country Wheels',
+    year: '2025',
+    category: 'Vehicle Rental · Business',
+    tech: ['WordPress', 'PHP', 'CSS'],
+    href: '#',
+    image: imgCountryWheels,
+    description: 'Premium bike & car rental website enabling seamless bookings from home with extended rental hour options.',
+  },
+  {
+    id: '05',
+    title: 'Tredit',
+    year: '2026',
+    category: 'Travel · Community · In Progress',
+    tech: ['MongoDB', 'Express', 'React', 'Node.js'],
+    href: '#',
+    image: imgTredit,
+    description: 'A community-driven platform where travellers become contributors, sharing real-time travel insights and helping fellow explorers.',
+    ongoing: true,
+  },
+  {
+    id: '06',
+    title: 'NutriTrack',
+    year: '2025',
+    category: 'Health · Personal Tool',
+    tech: ['HTML', 'CSS', 'JavaScript'],
+    href: '#',
+    image: imgNutriPlan,
+    description: 'A personal calorie & nutrition tracker — add food items, view their nutritional values, and monitor your daily intake to stay on top of your health goals.',
+    minor: true,
   },
 ];
 
@@ -111,20 +150,25 @@ function ProjectRow({ project, index, onHoverStart, onHoverEnd, isActive }) {
       viewport={{ once: true, amount: 0.3 }}
     >
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-8 md:py-10 flex items-center justify-between gap-6 transition-colors duration-300">
-        {/* Left: number + title */}
+        {/* Left: number + title + ongoing badge */}
         <div className="flex items-baseline gap-4 md:gap-6 min-w-0">
           <span className="font-syne font-extrabold text-accent/40 text-sm md:text-base tracking-tight transition-colors duration-300 group-hover:text-accent">
             {project.id}
           </span>
           <h3
-            className={`font-syne font-bold text-[clamp(1.6rem,4vw,3.5rem)] leading-[1.1] tracking-[-0.03em] transition-all duration-500 ${
-              isActive
+            className={`font-syne font-bold text-[clamp(1.6rem,4vw,3.5rem)] leading-[1.1] tracking-[-0.03em] transition-all duration-500 ${isActive
                 ? 'text-white translate-x-2'
                 : 'text-white/70 translate-x-0'
-            }`}
+              }`}
           >
             {project.title}
           </h3>
+          {project.ongoing && (
+            <span className="hidden md:inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-dm font-medium text-emerald-400 border border-emerald-400/30 rounded-full px-3 py-1 bg-emerald-400/5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              In Progress
+            </span>
+          )}
         </div>
 
         {/* Center: category (hidden on mobile) */}
@@ -138,7 +182,7 @@ function ProjectRow({ project, index, onHoverStart, onHoverEnd, isActive }) {
         <div className="flex-shrink-0 flex items-center gap-3">
           {/* Tech pills (hidden on small screens) */}
           <div className="hidden lg:flex items-center gap-2 mr-4">
-            {project.tech.slice(0, 2).map((t) => (
+            {project.tech.slice(0, 3).map((t) => (
               <span
                 key={t}
                 className="text-[10px] uppercase tracking-widest text-[#444] border border-[#222] rounded-full px-2.5 py-0.5 transition-colors duration-300 group-hover:text-[#888] group-hover:border-[#333]"
@@ -203,22 +247,28 @@ export default function Projects() {
 
   return (
     <motion.section
-      id="work"
+      id="projects"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
       viewport={{ once: true, amount: 0.1 }}
-      className="relative py-32 lg:py-44"
+      className="relative py-32 lg:py-44 bg-[#000000] z-30"
     >
-      {/* Section header */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-16 md:mb-20">
-        <div className="flex items-end justify-between gap-8">
-          <h2 className="font-syne font-bold text-[clamp(2.5rem,5vw,5rem)] tracking-tighter3 text-white">
-            Selected Work.
-          </h2>
-          <div className="text-sm tracking-[0.12em] uppercase text-[#888888] font-dm">
-            [ 2024 — 2025 ]
-          </div>
+      {/* Sticky section label — like // Intro */}
+      <div className="sticky top-[76px] z-20 w-full bg-[#000000] pointer-events-none">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-4 pb-10">
+          <span
+            className="intro-label font-dm text-sm sm:text-base md:text-lg tracking-wide select-none cursor-pointer pointer-events-auto"
+          >
+            // Projects
+          </span>
+        </div>
+      </div>
+
+      {/* Year label */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-12 md:mb-16 mt-8 flex justify-end">
+        <div className="text-sm tracking-[0.12em] uppercase text-[#888888] font-dm">
+          [ 2025 — 2026 ]
         </div>
       </div>
 
@@ -285,17 +335,18 @@ export default function Projects() {
 
       {/* View all projects link */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 mt-16">
-        <motion.a
-          href="#"
-          className="group inline-flex items-center gap-4"
-          whileHover={{ x: 6 }}
-          transition={{ duration: 0.3 }}
-        >
-          <span className="font-dm text-sm tracking-wide text-white/60 group-hover:text-white transition-colors duration-300">
-            View all projects
-          </span>
-          <span className="block h-[1.5px] w-8 bg-accent/40 origin-left transition-all duration-300 group-hover:w-12 group-hover:bg-accent" />
-        </motion.a>
+        <Link to="/projects">
+          <motion.div
+            className="group inline-flex items-center gap-4"
+            whileHover={{ x: 6 }}
+            transition={{ duration: 0.3 }}
+          >
+            <span className="font-dm text-sm tracking-wide text-white/60 group-hover:text-white transition-colors duration-300">
+              View all projects
+            </span>
+            <span className="block h-[1.5px] w-8 bg-accent/40 origin-left transition-all duration-300 group-hover:w-12 group-hover:bg-accent" />
+          </motion.div>
+        </Link>
       </div>
     </motion.section>
   );

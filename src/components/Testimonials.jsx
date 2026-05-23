@@ -32,15 +32,17 @@ export default function Testimonials() {
   }, [reducedMotion]);
 
   return (
-    <motion.section
+    <section
       id="about"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-      viewport={{ once: false, amount: 0.2 }}
-      className="py-40 lg:py-56"
+      className="py-40 lg:py-56 bg-[#000000] z-30 relative"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+        viewport={{ once: true, amount: 0.1 }}
+        className="max-w-7xl mx-auto px-6 lg:px-12"
+      >
         <div className="mt-14 flex items-center justify-center">
           <div className="w-full max-w-3xl">
             <AnimatePresence mode="wait">
@@ -65,8 +67,8 @@ export default function Testimonials() {
             </AnimatePresence>
           </div>
         </div>
-      </div>
-    </motion.section>
+      </motion.div>
+    </section>
   );
 }
 
