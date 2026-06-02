@@ -9,7 +9,7 @@ export function getCloudinaryUrl(publicId, type = 'image', options = {}) {
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const folder = import.meta.env.VITE_CLOUDINARY_FOLDER || 'portfolio';
   
-  if (!cloudName) {
+  if (!cloudName || cloudName === 'your_cloud_name') {
     return '';
   }
 
