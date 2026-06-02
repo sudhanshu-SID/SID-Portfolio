@@ -9,10 +9,10 @@ import MobileHero from './components/MobileHero.jsx';
 import ScrollTextReveal from './components/ScrollTextReveal.jsx';
 import TechStack from './components/TechStack.jsx';
 import Projects from './components/Projects.jsx';
-import KnowMe from './components/KnowMe.jsx';
 import Testimonials from './components/Testimonials.jsx';
 import Footer from './components/Footer.jsx';
 import ProjectsPage from './components/ProjectsPage.jsx';
+import KnowMePage from './components/KnowMePage.jsx';
 
 function CursorFX() {
   const reducedMotion = useReducedMotion();
@@ -64,7 +64,6 @@ function HomePage() {
         <ScrollTextReveal />
         <TechStack />
         <Projects />
-        <KnowMe />
         {/* <Testimonials /> */}
         <Footer />
       </main>
@@ -91,6 +90,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/knowme" element={<KnowMePage />} />
           </Routes>
         </div>
       </ReactLenis>

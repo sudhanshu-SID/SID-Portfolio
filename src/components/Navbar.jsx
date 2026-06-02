@@ -14,7 +14,7 @@ export default function Navbar() {
   const navItems = useMemo(
     () => [
       { label: 'PROJECTS', id: 'projects', path: '/projects' },
-      { label: 'KNOW ME', id: 'knowme' },
+      { label: 'KNOW ME', id: 'knowme', path: '/knowme' },
       { label: 'CONTACT', id: 'contact' },
     ],
     [],

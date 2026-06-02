@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 // ── Project images ──────────────────────────────────────
 import imgYumeCav from '../assets/Project-yumecav.webp';
@@ -133,13 +133,15 @@ function CursorImage({ image, isVisible }) {
 }
 
 // ── Single project row ──────────────────────────────────
-function ProjectRow({ project, index, onHoverStart, onHoverEnd, isActive }) {
+function ProjectRow({ project, index, onHoverStart, onHoverEnd, isActive, isMobile }) {
+  const navigate = useNavigate();
+
   return (
-    <motion.a
-      href={project.href}
-      className="group relative block border-b border-white/[0.07] last:border-b-0"
-      onMouseEnter={() => onHoverStart(index)}
-      onMouseLeave={onHoverEnd}
+    <motion.div
+      onClick={() => navigate('/projects')}
+      className="group relative block border-b border-white/[0.07] last:border-b-0 cursor-pointer"
+      onMouseEnter={() => !isMobile && onHoverStart(index)}
+      onMouseLeave={() => !isMobile && onHoverEnd()}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{
@@ -152,7 +154,7 @@ function ProjectRow({ project, index, onHoverStart, onHoverEnd, isActive }) {
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-8 md:py-10 flex items-center justify-between gap-6 transition-colors duration-300">
         {/* Left: number + title + ongoing badge */}
         <div className="flex items-baseline gap-4 md:gap-6 min-w-0">
-          <span className="font-syne font-extrabold text-accent/40 text-sm md:text-base tracking-tight transition-colors duration-300 group-hover:text-accent">
+          <span className="font-syne font-extrabold text-accent/40 text-sm md:text-base tracking-tight transition-colors duration-300 md:group-hover:text-accent">
             {project.id}
           </span>
           <h3
@@ -172,7 +174,7 @@ function ProjectRow({ project, index, onHoverStart, onHoverEnd, isActive }) {
         </div>
 
         {/* Center: category (hidden on mobile) */}
-        <div className="hidden md:flex items-center gap-3 text-xs uppercase tracking-[0.12em] text-[#555] font-dm transition-colors duration-300 group-hover:text-[#888]">
+        <div className="hidden md:flex items-center gap-3 text-xs uppercase tracking-[0.12em] text-[#555] font-dm transition-colors duration-300 md:group-hover:text-[#888]">
           <span>{project.category}</span>
           <span className="w-1 h-1 rounded-full bg-[#444]" />
           <span>{project.year}</span>
@@ -185,7 +187,7 @@ function ProjectRow({ project, index, onHoverStart, onHoverEnd, isActive }) {
             {project.tech.slice(0, 3).map((t) => (
               <span
                 key={t}
-                className="text-[10px] uppercase tracking-widest text-[#444] border border-[#222] rounded-full px-2.5 py-0.5 transition-colors duration-300 group-hover:text-[#888] group-hover:border-[#333]"
+                className="text-[10px] uppercase tracking-widest text-[#444] border border-[#222] rounded-full px-2.5 py-0.5 transition-colors duration-300 md:group-hover:text-[#888] md:group-hover:border-[#333]"
               >
                 {t}
               </span>
@@ -193,12 +195,12 @@ function ProjectRow({ project, index, onHoverStart, onHoverEnd, isActive }) {
           </div>
 
           <motion.div
-            className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center transition-colors duration-300 group-hover:border-accent/50 group-hover:bg-accent/5"
+            className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center transition-colors duration-300 md:group-hover:border-accent/50 md:group-hover:bg-accent/5"
             animate={isActive ? { x: 4, scale: 1.1 } : { x: 0, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
             <svg
-              className="w-4 h-4 text-white/40 transition-colors duration-300 group-hover:text-accent"
+              className="w-4 h-4 text-white/40 transition-colors duration-300 md:group-hover:text-accent"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={2}
@@ -217,13 +219,14 @@ function ProjectRow({ project, index, onHoverStart, onHoverEnd, isActive }) {
         animate={{ opacity: isActive ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       />
-    </motion.a>
+    </motion.div>
   );
 }
 
 // ── Main Projects section ───────────────────────────────
 export default function Projects() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
 
   // Raw mouse position (relative to the projects container)
@@ -235,7 +238,17 @@ export default function Projects() {
   const springX = useSpring(mouseX, springConfig);
   const springY = useSpring(mouseY, springConfig);
 
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const handleMouseMove = (e) => {
+    if (isMobile) return;
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
     mouseX.set(e.clientX - rect.left);
@@ -292,6 +305,7 @@ export default function Projects() {
             onHoverStart={setHoveredIndex}
             onHoverEnd={() => setHoveredIndex(null)}
             isActive={hoveredIndex === index}
+            isMobile={isMobile}
           />
         ))}
 
