@@ -3,12 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 // ── Project images ──────────────────────────────────────
-import imgYumeCav from '../assets/Project-yumecav.webp';
-import imgIdealFirm from '../assets/Project-TheidealFirm.webp';
-import imgRideWheelz from '../assets/Project-RizeWheelz.webp';
-import imgCountryWheels from '../assets/Project-countryWheels.webp';
-import imgTredit from '../assets/Project-Tredit.webp';
-import imgNutriPlan from '../assets/project-nutriplan.webp';
+import { getCloudinaryUrl } from '../utils/cloudinary';
 
 const allProjects = [
   {
@@ -18,7 +13,7 @@ const allProjects = [
     category: 'E-commerce',
     tagline: 'Elevate Your Reality',
     tech: ['React', 'TypeScript', 'Supabase', 'Razorpay', 'Shiprocket'],
-    image: imgYumeCav,
+    image: getCloudinaryUrl('Project-yumecav'),
     description:
       'A fully customised e-commerce platform selling high-quality posters and stickers with an aesthetic design targeting GenZ audiences. Features B2B selling capabilities, Razorpay payment integration, and Shiprocket logistics. Deployed on Vercel.',
     color: '#9333ea',
@@ -30,7 +25,7 @@ const allProjects = [
     category: 'Corporate',
     tagline: 'Amplify Your Digital Presence',
     tech: ['React', 'TypeScript'],
-    image: imgIdealFirm,
+    image: getCloudinaryUrl('Project-TheidealFirm'),
     description:
       'A clean, professional static site showcasing digital marketing services provided by the company. Integrated with WhatsApp for quick inquiries and a contact form for lead generation.',
     color: '#0ea5e9',
@@ -42,7 +37,7 @@ const allProjects = [
     category: 'Vehicle Rental',
     tagline: 'Rent. Drive. Discover.',
     tech: ['WordPress', 'PHP', 'CSS'],
-    image: imgRideWheelz,
+    image: getCloudinaryUrl('Project-RizeWheelz'),
     description:
       'A vehicle rental platform with integrated travel plans, built for a self-drive rental business in Guwahati. Includes booking system and travel itinerary features.',
     color: '#f97316',
@@ -54,7 +49,7 @@ const allProjects = [
     category: 'Vehicle Rental',
     tagline: 'Book Rides From Home',
     tech: ['WordPress', 'PHP', 'CSS'],
-    image: imgCountryWheels,
+    image: getCloudinaryUrl('Project-countryWheels'),
     description:
       'Premium bike & car rental website enabling seamless bookings with extended rental hour options. Built with WordPress for easy content management by the business.',
     color: '#22c55e',
@@ -66,7 +61,7 @@ const allProjects = [
     category: 'Travel Community',
     tagline: 'Explore Through Others\' Eyes',
     tech: ['MongoDB', 'Express', 'React', 'Node.js'],
-    image: imgTredit,
+    image: getCloudinaryUrl('Project-Tredit'),
     description:
       'An ongoing community-driven platform where travellers become contributors to fellow travellers. Share real-time travel insights, contribute on the way while travelling, and help new explorers discover the world.',
     color: '#E84430',
@@ -79,7 +74,7 @@ const allProjects = [
     category: 'Personal Tool',
     tagline: 'Track What You Eat',
     tech: ['HTML', 'CSS', 'JavaScript'],
-    image: imgNutriPlan,
+    image: getCloudinaryUrl('project-nutriplan'),
     description:
       'A personal calorie & nutrition tracker — add food items, view their nutritional values, and monitor your daily intake. Built as a personal utility to stay on top of health goals.',
     color: '#a855f7',

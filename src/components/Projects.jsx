@@ -3,12 +3,7 @@ import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motio
 import { useNavigate, Link } from 'react-router-dom';
 
 // ── Project images ──────────────────────────────────────
-import imgYumeCav from '../assets/Project-yumecav.webp';
-import imgIdealFirm from '../assets/Project-TheidealFirm.webp';
-import imgRideWheelz from '../assets/Project-RizeWheelz.webp';
-import imgCountryWheels from '../assets/Project-countryWheels.webp';
-import imgTredit from '../assets/Project-Tredit.webp';
-import imgNutriPlan from '../assets/project-nutriplan.webp';
+import { getCloudinaryUrl } from '../utils/cloudinary';
 
 // ── Project data ────────────────────────────────────────
 const projects = [
@@ -19,7 +14,7 @@ const projects = [
     category: 'E-commerce · Posters & Stickers',
     tech: ['React', 'TypeScript', 'Supabase', 'Razorpay'],
     href: '#',
-    image: imgYumeCav,
+    image: getCloudinaryUrl('Project-yumecav'),
     description: 'Fully customised high-quality posters & stickers e-commerce platform with aesthetic GenZ-targeted design, B2B support, Razorpay payments & Shiprocket logistics.',
   },
   {
@@ -29,7 +24,7 @@ const projects = [
     category: 'Corporate · Digital Marketing',
     tech: ['React', 'TypeScript'],
     href: '#',
-    image: imgIdealFirm,
+    image: getCloudinaryUrl('Project-TheidealFirm'),
     description: 'Static corporate site showcasing digital marketing services with WhatsApp & form integration for seamless client inquiries.',
   },
   {
@@ -39,7 +34,7 @@ const projects = [
     category: 'Vehicle Rental · Travel',
     tech: ['WordPress', 'PHP', 'CSS'],
     href: '#',
-    image: imgRideWheelz,
+    image: getCloudinaryUrl('Project-RizeWheelz'),
     description: 'Vehicle rental platform with integrated travel plans, built for a self-drive rental business in Guwahati.',
   },
   {
@@ -49,7 +44,7 @@ const projects = [
     category: 'Vehicle Rental · Business',
     tech: ['WordPress', 'PHP', 'CSS'],
     href: '#',
-    image: imgCountryWheels,
+    image: getCloudinaryUrl('Project-countryWheels'),
     description: 'Premium bike & car rental website enabling seamless bookings from home with extended rental hour options.',
   },
   {
@@ -59,7 +54,7 @@ const projects = [
     category: 'Travel · Community · In Progress',
     tech: ['MongoDB', 'Express', 'React', 'Node.js'],
     href: '#',
-    image: imgTredit,
+    image: getCloudinaryUrl('Project-Tredit'),
     description: 'A community-driven platform where travellers become contributors, sharing real-time travel insights and helping fellow explorers.',
     ongoing: true,
   },
@@ -70,7 +65,7 @@ const projects = [
     category: 'Health · Personal Tool',
     tech: ['HTML', 'CSS', 'JavaScript'],
     href: '#',
-    image: imgNutriPlan,
+    image: getCloudinaryUrl('project-nutriplan'),
     description: 'A personal calorie & nutrition tracker — add food items, view their nutritional values, and monitor your daily intake to stay on top of your health goals.',
     minor: true,
   },

@@ -74,7 +74,7 @@ function HomePage() {
 export default function App() {
   return (
     <BrowserRouter>
-      <ReactLenis root>
+      <ReactLenis root options={{ lerp: 0.15, wheelMultiplier: 1.2, smoothWheel: true }}>
         <div className="min-h-screen bg-[#000000] text-[#F5F5F5] relative" style={{ overflowX: 'clip' }}>
           <div
             aria-hidden="true"

@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import coffeeImg from "../assets/ice coffee.png";
+import { getCloudinaryUrl } from '../utils/cloudinary';
 
 /* ──────────────────────────────────────────────
    The Real Stack definition
    ────────────────────────────────────────────── */
 const realStack = [
-  { name: "Coffee",       icon: <img src={coffeeImg} alt="Coffee" className="w-10 h-10 object-contain drop-shadow-xl" /> },
-  { name: "Cursor",       icon: <img src="/images/cursor.png" alt="Cursor" className="w-8 h-8 object-contain" /> },
-  { name: "Claude",       icon: <img src="/images/claude.png" alt="Claude" className="w-8 h-8 object-contain" /> },
-  { name: "ChatGPT",      icon: <img src="/images/chat_gpt.png" alt="ChatGPT" className="w-8 h-8 object-contain" /> },
-  { name: "Gemini",       icon: <img src="/images/Geminii.png" alt="Gemini" className="w-8 h-8 object-contain" /> },
-  { name: "AI Studio",    icon: <img src="/images/ai studio.png" alt="AI Studio" className="w-8 h-8 object-contain" /> },
-  { name: "Perplexity",   icon: <img src="/images/perplexity.png" alt="Perplexity" className="w-8 h-8 object-contain" /> },
-  { name: "Antigravity",  icon: <img src="/images/Antigravity.png" alt="Antigravity" className="w-8 h-8 object-contain" /> },
-  { name: "Emergent",     icon: <img src="/images/emergent.png" alt="Emergent" className="w-8 h-8 object-contain" /> },
-  { name: "Stitch",       icon: <img src="/images/stitch.jpeg" alt="Stitch" className="w-8 h-8 object-cover rounded-md" /> },
+  { name: "Coffee",       icon: <img src={getCloudinaryUrl('ice coffee')} alt="Coffee" className="w-10 h-10 object-contain drop-shadow-xl" /> },
+  { name: "Cursor",       icon: <img src={getCloudinaryUrl('cursor')} alt="Cursor" className="w-8 h-8 object-contain" /> },
+  { name: "Claude",       icon: <img src={getCloudinaryUrl('claude')} alt="Claude" className="w-8 h-8 object-contain" /> },
+  { name: "ChatGPT",      icon: <img src={getCloudinaryUrl('chat_gpt')} alt="ChatGPT" className="w-8 h-8 object-contain" /> },
+  { name: "Gemini",       icon: <img src={getCloudinaryUrl('Geminii')} alt="Gemini" className="w-8 h-8 object-contain" /> },
+  { name: "AI Studio",    icon: <img src={getCloudinaryUrl('ai studio')} alt="AI Studio" className="w-8 h-8 object-contain" /> },
+  { name: "Perplexity",   icon: <img src={getCloudinaryUrl('perplexity')} alt="Perplexity" className="w-8 h-8 object-contain" /> },
+  { name: "Antigravity",  icon: <img src={getCloudinaryUrl('Antigravity')} alt="Antigravity" className="w-8 h-8 object-contain" /> },
+  { name: "Emergent",     icon: <img src={getCloudinaryUrl('emergent')} alt="Emergent" className="w-8 h-8 object-contain" /> },
+  { name: "Stitch",       icon: <img src={getCloudinaryUrl('stitch')} alt="Stitch" className="w-8 h-8 object-cover rounded-md" /> },
 ];
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Briefcase, Camera, Code } from 'lucide-react';
+import { FaInstagram, FaLinkedin, FaGithub } from 'react-icons/fa';
 
 export default function Footer() {
   const reducedMotion = useReducedMotion();
@@ -35,48 +35,48 @@ export default function Footer() {
         {/* Row 2: Info bar */}
         <div className="mt-14 pt-8 border-t border-[#222] flex items-center justify-between gap-6 flex-col sm:flex-row">
           <div className="text-sm text-[#888888] font-dm">
-            © 2025 TD. All rights reserved.
+            © 2025 SID. All rights reserved.
           </div>
 
-          <div className="text-sm text-[#888888] font-dm">- India</div>
+          <div className="text-sm text-[#888888] font-dm">- A WANNA BE CREATOR</div>
 
           <div className="flex items-center gap-4 text-sm">
             <motion.a
-              href="https://instagram.com"
+              href="https://www.instagram.com/hey_sid____?igsh=MXZmdHpwc2I0ZzVydw%3D%3D&utm_source=qr"
               target="_blank"
               rel="noreferrer"
               whileHover={reducedMotion ? undefined : { scale: 1.2, color: '#E84430' }}
               className="text-[#888888] hover:text-accent transition-colors"
               aria-label="Instagram"
             >
-              <Camera size={18} />
+              <FaInstagram size={18} />
             </motion.a>
             <motion.a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/ranjan-sudhanshu/"
               target="_blank"
               rel="noreferrer"
               whileHover={reducedMotion ? undefined : { scale: 1.2, color: '#E84430' }}
               className="text-[#888888] hover:text-accent transition-colors"
               aria-label="LinkedIn"
             >
-              <Briefcase size={18} />
+              <FaLinkedin size={18} />
             </motion.a>
             <motion.a
-              href="https://github.com"
+              href="https://github.com/sudhanshu-SID"
               target="_blank"
               rel="noreferrer"
               whileHover={reducedMotion ? undefined : { scale: 1.2, color: '#E84430' }}
               className="text-[#888888] hover:text-accent transition-colors"
               aria-label="GitHub"
             >
-              <Code size={18} />
+              <FaGithub size={18} />
             </motion.a>
 
             <a
-              href="mailto:hello@yourdomain.com"
+              href="mailto:sudhanshu7536@gmail.com"
               className="text-[#888888] hover:text-accent transition-colors font-dm"
             >
-              ✉ hello@yourdomain.com
+              ✉ sudhanshu7536@gmail.com
             </a>
           </div>
         </div>

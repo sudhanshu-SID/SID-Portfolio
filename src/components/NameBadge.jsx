@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import badgeImg from "../assets/badge.png";
-import hoverImg from "../assets/hover image.jpeg";
+import { getCloudinaryUrl } from '../utils/cloudinary';
 
 const NameBadge = () => {
   const mouseX = useMotionValue(0);
@@ -135,7 +134,7 @@ const NameBadge = () => {
                 >
                   {/* Default Profile Image */}
                   <img
-                    src={badgeImg}
+                    src={getCloudinaryUrl('badge')}
                     alt="Profile"
                     className="w-full h-full object-cover group-hover:opacity-0 transition-opacity duration-300"
                     draggable={false}
@@ -143,7 +142,7 @@ const NameBadge = () => {
 
                   {/* Hover Image Effect */}
                   <img
-                    src={hoverImg}
+                    src={getCloudinaryUrl('hover image')}
                     alt="Hover Profile"
                     className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     draggable={false}

@@ -89,26 +89,20 @@ export default function ScrollTextReveal({ className = '' }) {
   const words = buildWords(SEGMENTS);
   const total = words.length;
 
-  /*
-   * h-[200vh] → 100vh of scroll while pinned.
-   * Words fill 0% → 82% (≈ 82vh of scrolling — gives time to read).
-   * CTA appears at 84–92%.
-   * Section releases at 100% — only ~8vh of dead space after CTA.
-   */
   const START = 0.10;
-  const END = 0.40;
+  const END = 0.70;
   const range = END - START;
   const wordSlice = range / total;
 
   /* CTA fades in right after the last word fills */
-  const ctaOpacity = useTransform(scrollYProgress, [0.42, 0.50], [0, 1]);
-  const ctaY = useTransform(scrollYProgress, [0.42, 0.50], [20, 0]);
+  const ctaOpacity = useTransform(scrollYProgress, [0.75, 0.85], [0, 1]);
+  const ctaY = useTransform(scrollYProgress, [0.75, 0.85], [20, 0]);
 
   return (
     <section
       ref={containerRef}
       id="intro"
-      className={`relative z-10 h-[300vh] bg-black ${className}`}
+      className={`relative z-10 h-[150vh] bg-black ${className}`}
     >
       {/* Sticky frame — stays pinned for 100vh of scroll */}
       <div

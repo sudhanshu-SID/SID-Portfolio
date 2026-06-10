@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { getCloudinaryUrl } from '../utils/cloudinary';
 
-// Import travel destination images
-import imgKasol from '../assets/travel_kasol.png';
-import imgCoorg from '../assets/travel_coorg.png';
-import imgChicago from '../assets/travel_chicago.png';
-import imgManali from '../assets/travel_manali.png';
+// Local imports removed
 
 const travelSpots = [
   {
@@ -14,7 +10,7 @@ const travelSpots = [
     destination: 'Kasol, India',
     desc: 'Wandering by the Parvati River, walking under towering pines, and catching conversations around a bonfire in the valley.',
     gradient: 'from-orange-500/10 via-amber-500/5 to-transparent',
-    image: getCloudinaryUrl('travel_kasol', 'image') || imgKasol,
+    image: getCloudinaryUrl('travel_kasol', 'image'),
     type: 'image',
     height: 'h-[380px]',
     icon: (
@@ -29,7 +25,7 @@ const travelSpots = [
     destination: 'Coorg, India',
     desc: 'Wild treks, mist-covered coffee plantations, and pitch-black nights camping under a canopy of ancient trees.',
     gradient: 'from-emerald-500/10 via-teal-500/5 to-transparent',
-    videoUrl: getCloudinaryUrl('travel_coorg', 'video') || 'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+    videoUrl: getCloudinaryUrl('travel_coorg', 'video'),
     type: 'video',
     height: 'h-[300px]',
     icon: (
@@ -43,7 +39,7 @@ const travelSpots = [
     destination: 'Chicago, USA',
     desc: 'Exploring massive skyscrapers, lakeside winds, and capturing architectural lines framing neon city lights.',
     gradient: 'from-blue-500/10 via-cyan-500/5 to-transparent',
-    videoUrl: getCloudinaryUrl('travel_chicago', 'video') || 'https://assets.mixkit.co/videos/preview/mixkit-skyscrapers-and-traffic-in-chicago-at-night-1721-large.mp4',
+    videoUrl: getCloudinaryUrl('travel_chicago', 'video'),
     type: 'video',
     height: 'h-[330px]',
     icon: (
@@ -57,7 +53,7 @@ const travelSpots = [
     destination: 'Manali, Himalayas',
     desc: 'Witnessing snow peaks touching the sky, winding passes, and the quiet serenity of high-altitude valleys.',
     gradient: 'from-purple-500/10 via-indigo-500/5 to-transparent',
-    image: getCloudinaryUrl('travel_manali', 'image') || imgManali,
+    image: getCloudinaryUrl('travel_manali', 'image'),
     type: 'image',
     height: 'h-[410px]',
     icon: (

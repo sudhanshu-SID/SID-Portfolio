@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import heroFull from '../assets/hero-full.png';
+import { getCloudinaryUrl } from '../utils/cloudinary';
 
 // The marquee text — repeated enough to fill wide screens
 const MARQUEE_TEXT = "VIBE-CODER";
@@ -40,7 +40,7 @@ export default function Hero() {
       {/* ========== LEVEL 1 (Bottom): Background portrait + gradient ========== */}
       <div className="absolute inset-0 z-0">
         <img
-          src={heroFull}
+          src={getCloudinaryUrl('hero-full')}
           alt=""
           aria-hidden="true"
           loading="eager"
@@ -97,7 +97,7 @@ export default function Hero() {
           }}
         >
           <img
-            src={heroFull}
+            src={getCloudinaryUrl('hero-full')}
             alt="Portrait"
             loading="eager"
             className="absolute inset-0 w-full h-full object-cover object-top sm:object-center scale-105"

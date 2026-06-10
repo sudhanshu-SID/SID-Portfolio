@@ -1,21 +1,15 @@
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import catDance from '../assets/cat-dance.gif';
-import earbuds from '../assets/earbuds.png';
-import badgeImg from '../assets/badge.png';
-import hoverImg from '../assets/hover image.jpeg';
+import { motion } from 'framer-motion';
+import { getCloudinaryUrl } from '../utils/cloudinary';
 
 export default function MobileHero() {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, (val) => val * 0.5);
-
   return (
     <>
       <section
         id="mobile-hero"
         className="sm:hidden sticky top-0 w-full h-[100dvh] overflow-hidden bg-black z-0"
       >
-        <motion.div style={{ y }} className="absolute inset-0 w-full h-full flex flex-col will-change-transform">
+        <div className="absolute inset-0 w-full h-full flex flex-col">
         {/* ═══════ Background Layer ═══════ */}
         <div className="absolute inset-0 z-0">
           {/* Deep dark gradient canvas */}
@@ -139,13 +133,13 @@ export default function MobileHero() {
                         style={{ border: "3px solid #57534e" }}
                       >
                         <img
-                          src={badgeImg}
+                          src={getCloudinaryUrl('badge')}
                           alt="Profile"
                           className="w-full h-full object-cover group-hover:opacity-0 transition-opacity duration-300"
                           draggable={false}
                         />
                         <img
-                          src={hoverImg}
+                          src={getCloudinaryUrl('hover image')}
                           alt="Hover Profile"
                           className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                           draggable={false}
@@ -173,7 +167,7 @@ export default function MobileHero() {
               <motion.img
                 animate={{ y: [0, -10, 0], rotate: [-15, -5, -15] }}
                 transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                src={earbuds}
+                src={getCloudinaryUrl('earbuds')}
                 alt="Earbuds"
                 className="w-[120px] h-[120px] object-contain drop-shadow-[0_15px_25px_rgba(232,68,48,0.5)]"
               />
@@ -210,7 +204,7 @@ export default function MobileHero() {
                 
                 {/* Feathered edges via mask-image to perfectly dissolve the square bounding box */}
                 <img
-                  src={catDance}
+                  src={getCloudinaryUrl('cat-dance', 'image')}
                   alt="Dancing Cat"
                   className="w-full h-full object-contain relative z-10 opacity-90"
                   style={{ 
@@ -266,7 +260,7 @@ export default function MobileHero() {
           className="absolute inset-0 z-[5] pointer-events-none"
           style={{ boxShadow: 'inset 0 0 120px 40px rgba(0,0,0,0.9)' }}
         />
-        </motion.div>
+        </div>
       </section>
 
       {/* ═══════ Embedded Styles ═══════ */}

@@ -136,7 +136,7 @@ export default function TechStack() {
   return (
     <section
       id="tech"
-      className="relative min-h-screen flex flex-col items-center justify-center py-[100px] px-4 sm:px-12 z-20 mt-[-200vh] bg-[#000000] overflow-hidden group border-t border-white/5 shadow-[0_-30px_60px_rgba(0,0,0,0.8)]"
+      className="relative min-h-screen flex flex-col items-center justify-center py-[100px] px-4 sm:px-12 z-20 bg-[#000000] overflow-hidden group border-t border-white/5 shadow-[0_-30px_60px_rgba(0,0,0,0.8)]"
       onMouseMove={handleMouseMove}
     >
       {/* Dynamic ambient mouse glow based on site accent color */}

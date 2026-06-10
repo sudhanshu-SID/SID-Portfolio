@@ -1,15 +1,14 @@
 import './style.css'
-import typescriptLogo from './assets/typescript.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+// @ts-ignore
+import { getCloudinaryUrl } from './utils/cloudinary.js';
 import { setupCounter } from './counter.ts'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <section id="center">
   <div class="hero">
-    <img src="${heroImg}" class="base" width="170" height="179">
-    <img src="${typescriptLogo}" class="framework" alt="TypeScript logo"/>
-    <img src="${viteLogo}" class="vite" alt="Vite logo" />
+    <img src="${getCloudinaryUrl('hero')}" class="base" width="170" height="179">
+    <img src="${getCloudinaryUrl('typescript')}" class="framework" alt="TypeScript logo"/>
+    <img src="${getCloudinaryUrl('vite')}" class="vite" alt="Vite logo" />
   </div>
   <div>
     <h1>Get started</h1>
@@ -28,13 +27,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <ul>
       <li>
         <a href="https://vite.dev/" target="_blank">
-          <img class="logo" src="${viteLogo}" alt="" />
+          <img class="logo" src="${getCloudinaryUrl('vite')}" alt="" />
           Explore Vite
         </a>
       </li>
       <li>
         <a href="https://www.typescriptlang.org" target="_blank">
-          <img class="button-icon" src="${typescriptLogo}" alt="">
+          <img class="button-icon" src="${getCloudinaryUrl('typescript')}" alt="">
           Learn more
         </a>
       </li>
