@@ -27,5 +27,12 @@ export function getCloudinaryUrl(publicId, type = 'image', options = {}) {
   if (options.height) transformations += `,h_${options.height}`;
   if (options.crop) transformations += `,c_${options.crop}`;
 
-  return `https://res.cloudinary.com/${cloudName}/${type}/upload/${transformations}/${fullPublicId}`;
+  // Encode publicId properly to match Cloudinary's encoding, including apostrophes
+  const encodedPublicId = fullPublicId.split('/').map(segment => {
+    return encodeURIComponent(segment).replace(/[!'()*]/g, function(c) {
+      return '%' + c.charCodeAt(0).toString(16).toUpperCase();
+    });
+  }).join('/');
+
+  return `https://res.cloudinary.com/${cloudName}/${type}/upload/${transformations}/${encodedPublicId}`;
 }
