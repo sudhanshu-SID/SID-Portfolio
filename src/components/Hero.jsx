@@ -3,7 +3,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 import { getCloudinaryUrl } from '../utils/cloudinary';
 
 // The marquee text — repeated enough to fill wide screens
-const MARQUEE_TEXT = "VIBE-CODER";
+const MARQUEE_TEXT = "CREATIVE DEVELOPER";
 const REPEAT_COUNT = 12;
 
 // Build the text strip once
@@ -117,7 +117,7 @@ export default function Hero() {
           className="absolute bottom-8 left-6 md:left-12"
         >
           <p className="font-dm text-xs md:text-sm tracking-[0.2em] uppercase text-white/50 mb-1">
-            VIBE-CODER
+           CREATIVE 
           </p>
           <h1 className="font-syne font-extrabold text-2xl md:text-4xl tracking-tight text-white">
             WEB DEVELOPER<br/>
