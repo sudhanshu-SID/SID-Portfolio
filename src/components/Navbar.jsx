@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const MotionLink = motion(Link);
@@ -7,6 +7,11 @@ const MotionLink = motion(Link);
 export default function Navbar() {
   const { scrollY } = useScroll();
   const navBg = useTransform(scrollY, [0, 80], ['rgba(0,0,0,0)', 'rgba(0,0,0,0.85)']);
+
+  // Only enable the (expensive) backdrop-blur once scrolled off the top, so it
+  // isn't repainting the blurred strip over the hero every frame at rest.
+  const [scrolled, setScrolled] = useState(false);
+  useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 40));
 
   const [open, setOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -95,7 +100,7 @@ export default function Navbar() {
       <motion.nav
         style={{ backgroundColor: open ? 'transparent' : navBg }}
         className={`fixed top-0 left-0 right-0 z-[110] border-b border-transparent transition-all duration-300 ${
-          open ? 'backdrop-blur-none' : 'backdrop-blur-md'
+          !open && scrolled ? 'backdrop-blur-md' : 'backdrop-blur-none'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12 h-[76px] flex items-center justify-between">

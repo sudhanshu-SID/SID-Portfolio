@@ -1,11 +1,10 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useMemo, useRef } from 'react';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import NameBadge from './NameBadge';
 
 /* ── colour tokens ──────────────────────────────────────────────── */
 const RED = '#E84430';
 const WHITE = '#FFFFFF';
-const DIMMED = 'rgba(255,255,255,0.12)';
 
 /* ── text segments ──────────────────────────────────────────────── *
  *  Each segment has: text, revealed colour, and optional styling.
@@ -50,13 +49,25 @@ function buildWords(segments) {
   return words;
 }
 
-/* ── single word ────────────────────────────────────────────────── */
-function Word({ word, targetColor, scrollYProgress, rangeStart, rangeEnd, bold, italic, breakBefore }) {
-  const color = useTransform(
-    scrollYProgress,
-    [rangeStart, rangeEnd],
-    [DIMMED, targetColor],
-  );
+/* ── single word ────────────────────────────────────────────────── *
+ *  Reveal animates OPACITY (+ a small lift), never `color` — opacity
+ *  and transform are compositor-friendly, whereas per-frame `color`
+ *  changes force a text repaint on every word every frame. The colour
+ *  is static; at ~0.14 opacity on black, a dim red and a dim grey are
+ *  visually indistinguishable, so the dim→bright look is preserved.
+ * ───────────────────────────────────────────────────────────────── */
+const Word = React.memo(function Word({
+  word,
+  targetColor,
+  progress,
+  rangeStart,
+  rangeEnd,
+  bold,
+  italic,
+  breakBefore,
+}) {
+  const opacity = useTransform(progress, [rangeStart, rangeEnd], [0.14, 1]);
+  const y = useTransform(progress, [rangeStart, rangeEnd], [6, 0]);
 
   return (
     <>
@@ -64,7 +75,9 @@ function Word({ word, targetColor, scrollYProgress, rangeStart, rangeEnd, bold, 
       {breakBefore && <span className="block mt-4 md:mt-5" aria-hidden="true" />}
       <motion.span
         style={{
-          color,
+          opacity,
+          y,
+          color: targetColor,
           display: 'inline-block',
           fontWeight: bold ? 800 : undefined,
           fontStyle: italic ? 'italic' : undefined,
@@ -75,7 +88,7 @@ function Word({ word, targetColor, scrollYProgress, rangeStart, rangeEnd, bold, 
       </motion.span>
     </>
   );
-}
+});
 
 /* ── section ────────────────────────────────────────────────────── */
 export default function ScrollTextReveal({ className = '' }) {
@@ -86,17 +99,27 @@ export default function ScrollTextReveal({ className = '' }) {
     offset: ['start end', 'end end'],
   });
 
-  const words = buildWords(SEGMENTS);
+  /* Spring-smoothed driver: the reveal glides and eases *through* scroll
+     micro-stutters instead of tracking raw scroll 1:1, and it absorbs any
+     phase mismatch between Lenis and Framer Motion → buttery. Slightly
+     overdamped so it never overshoots/jiggles. */
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.0005,
+  });
+
+  const words = useMemo(() => buildWords(SEGMENTS), []);
   const total = words.length;
 
-  const START = 0.10;
-  const END = 0.70;
-  const range = END - START;
-  const wordSlice = range / total;
+  const START = 0.08;
+  const END = 0.72;
+  const step = (END - START) / total; // spacing between consecutive word starts
+  const WINDOW = step * 6; // each word reveals over ~6 steps → neighbours overlap → soft wave
 
   /* CTA fades in right after the last word fills */
-  const ctaOpacity = useTransform(scrollYProgress, [0.75, 0.85], [0, 1]);
-  const ctaY = useTransform(scrollYProgress, [0.75, 0.85], [20, 0]);
+  const ctaOpacity = useTransform(smooth, [0.78, 0.9], [0, 1]);
+  const ctaY = useTransform(smooth, [0.78, 0.9], [20, 0]);
 
   return (
     <section
@@ -134,14 +157,14 @@ export default function ScrollTextReveal({ className = '' }) {
               style={{ lineHeight: 1.3, wordBreak: 'normal', overflowWrap: 'normal' }}
             >
               {words.map((w, i) => {
-                const start = START + i * wordSlice;
-                const end = start + wordSlice;
+                const start = START + i * step;
+                const end = Math.min(start + WINDOW, 1);
                 return (
                   <Word
                     key={`${w.word}-${i}`}
                     word={w.word}
                     targetColor={w.targetColor}
-                    scrollYProgress={scrollYProgress}
+                    progress={smooth}
                     rangeStart={start}
                     rangeEnd={end}
                     bold={w.bold}
