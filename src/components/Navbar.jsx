@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create ? motion.create(Link) : motion(Link);
 
 export default function Navbar() {
   const { scrollY } = useScroll();

@@ -38,10 +38,10 @@ export default function MobileHero() {
             />
           </div>
 
-          {/* ═══════ Hanging Badge (Right Side - Restored Original Text & Size) ═══════ */}
-          <div className="relative z-40 flex justify-end pr-5 -mt-2">
+          {/* ═══════ Hanging Badge (Floating Right Side) ═══════ */}
+          <div className="absolute top-0 right-3 sm:right-5 z-40 pointer-events-auto">
             {/* Scaled down container so the full original badge fits on mobile */}
-            <div className="scale-[0.55] origin-top-right">
+            <div className="scale-[0.52] origin-top-right">
               <a href="#" className="mobile-badge-swing flex flex-col items-center cursor-pointer group">
                 {/* 1. Lanyard Strap */}
                 <div className="w-[26px] h-[240px] bg-stone-800 relative shadow-sm z-0">
@@ -154,7 +154,7 @@ export default function MobileHero() {
           </div>
 
           {/* ═══════ Center Left Content: Earbuds + Let's Vibe ═══════ */}
-          <div className="relative z-20 flex-1 flex flex-col justify-center px-8 -mt-80">
+          <div className="relative z-20 flex-1 flex flex-col justify-center px-6 sm:px-8 pt-8">
             <div className="relative inline-block w-fit">
 
               {/* Floating Earbuds (Over the letter L on the left) */}
@@ -162,14 +162,14 @@ export default function MobileHero() {
                 initial={{ opacity: 0, x: -30, rotate: -25 }}
                 animate={{ opacity: 1, x: 0, rotate: -15 }}
                 transition={{ duration: 1.2, delay: 0.2, type: 'spring', bounce: 0.4 }}
-                className="absolute -top-14 -left-6 z-20"
+                className="absolute -top-12 -left-5 z-20"
               >
                 <motion.img
                   animate={{ y: [0, -10, 0], rotate: [-15, -5, -15] }}
                   transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
                   src={getCloudinaryUrl('earbuds')}
                   alt="Earbuds"
-                  className="w-[120px] h-[120px] object-contain drop-shadow-[0_15px_25px_rgba(232,68,48,0.5)]"
+                  className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] object-contain drop-shadow-[0_15px_25px_rgba(232,68,48,0.5)]"
                 />
               </motion.div>
 
@@ -178,10 +178,10 @@ export default function MobileHero() {
                 initial={{ opacity: 0, x: -40 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="relative z-10 pl-4"
+                className="relative z-10 pl-3 sm:pl-4"
               >
                 <h2
-                  className="font-syne font-extrabold text-[64px] leading-[0.85] tracking-tighter text-white"
+                  className="font-syne font-extrabold text-[clamp(2.75rem,13vw,4rem)] leading-[0.85] tracking-tighter text-white"
                   style={{ textShadow: '0 10px 40px rgba(0,0,0,0.8)' }}
                 >
                   LET'S<br />
@@ -191,14 +191,14 @@ export default function MobileHero() {
                 </h2>
               </motion.div>
 
-              {/* Dancing Cat GIF (Right Side) */}
+              {/* Dancing Cat GIF (Right Side - positioned just above the title) */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.4, type: 'spring' }}
-                className="absolute -bottom-36 -right-[10px] z-10"
+                className="absolute -bottom-48 sm:-bottom-48 -right-[48px] sm:-right-[16px] z-10"
               >
-                <div className="relative flex items-center justify-center w-[120px] h-[120px]">
+                <div className="relative flex items-center justify-center w-[100px] h-[100px] sm:w-[120px] sm:h-[120px]">
                   {/* Soft black anchoring shadow to blend away the grid lines underneath */}
                   <div className="absolute inset-0 bg-black/60 rounded-full blur-[15px] z-0" />
 
@@ -224,16 +224,16 @@ export default function MobileHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="relative z-30 mb-8 px-8 w-full flex justify-between items-end"
+            className="relative z-30 pb-6 sm:pb-8 px-6 sm:px-8 w-full flex justify-between items-end pb-[max(1.5rem,env(safe-area-inset-bottom))]"
           >
             {/* Left: Titles */}
             <div className="relative z-10">
-              <p className="font-dm text-xs tracking-[0.2em] uppercase text-white/50 mb-2">
-                VIBE-CODER
+              <p className="font-dm text-[11px] sm:text-xs tracking-[0.2em] uppercase text-accent font-medium mb-1.5">
+                FULL STACK DEVELOPER
               </p>
-              <h1 className="font-syne font-extrabold text-[26px] tracking-tight text-white leading-[1.1]">
-                WEB DEVELOPER<br />
-                CONTENT CREATOR
+              <h1 className="font-syne font-extrabold text-[clamp(1.3rem,5.6vw,1.75rem)] tracking-tight text-white leading-[1.1]">
+                EXPERIMENTING WITH<br />
+                GOOD UI DESIGNS
               </h1>
             </div>
 

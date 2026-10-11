@@ -74,13 +74,27 @@ function HomePage() {
     <>
       <ScrollProgress />
       <Navbar />
-      <main>
+      <main className="relative">
         <MobileHero />
         <Hero />
         <ScrollTextReveal />
-        <TechStack />
         <Projects />
-        <Footer />
+
+        {/* ═══════ TECH STACK + FOOTER REVEAL SYSTEM ═══════ */}
+        <div className="relative">
+          {/* Sticky TechStack: pinned to viewport as user scrolls into it */}
+          <div className="sticky top-0 h-screen w-full z-10 overflow-hidden">
+            <TechStack />
+          </div>
+
+          {/* Scroll runway: TechStack remains pinned while scrolling through this duration */}
+          <div className="h-[40vh] pointer-events-none" />
+
+          {/* Footer: higher stacking order (z-20), slides up naturally over TechStack */}
+          <div className="relative z-20 w-full">
+            <Footer />
+          </div>
+        </div>
       </main>
     </>
   );

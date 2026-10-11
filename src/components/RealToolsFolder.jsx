@@ -22,7 +22,7 @@ const realStack = [
 /* ──────────────────────────────────────────────
    RealToolsFolder Component
    ────────────────────────────────────────────── */
-export function RealToolsFolder() {
+export function RealToolsFolder({ onHoverChange }) {
   const [hovered, setHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -33,21 +33,29 @@ export function RealToolsFolder() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const handleHoverStart = () => {
+    setHovered(true);
+    onHoverChange?.(true);
+  };
+
+  const handleHoverEnd = () => {
+    setHovered(false);
+    onHoverChange?.(false);
+  };
+
+  const handleToggle = () => {
+    const nextState = !hovered;
+    setHovered(nextState);
+    onHoverChange?.(nextState);
+  };
+
   return (
     <>
-      {/* Mobile Overlay */}
-      {hovered && (
-        <div 
-          className="absolute sm:hidden z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 pointer-events-none" 
-          style={{ width: '200vw', height: '200vh', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-        />
-      )}
-      
       <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 scale-[0.45] sm:scale-100 origin-bottom-right">
         <motion.div
-          onMouseEnter={() => { if (typeof window !== "undefined" && window.innerWidth >= 640) setHovered(true); }}
-          onMouseLeave={() => { if (typeof window !== "undefined" && window.innerWidth >= 640) setHovered(false); }}
-          onClick={() => { if (typeof window !== "undefined" && window.innerWidth < 640) setHovered(!hovered); }}
+          onMouseEnter={() => { if (typeof window !== "undefined" && window.innerWidth >= 640) handleHoverStart(); }}
+          onMouseLeave={() => { if (typeof window !== "undefined" && window.innerWidth >= 640) handleHoverEnd(); }}
+          onClick={() => { if (typeof window !== "undefined" && window.innerWidth < 640) handleToggle(); }}
           className="flex flex-col items-center gap-2 group cursor-pointer w-[140px]"
           whileTap={{ scale: 0.95 }}
         >

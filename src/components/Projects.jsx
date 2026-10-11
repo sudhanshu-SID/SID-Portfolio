@@ -254,30 +254,52 @@ export default function Projects() {
     hoveredIndex !== null ? projects[hoveredIndex]?.image : null;
 
   return (
-    <motion.section
+    <section
       id="projects"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-      viewport={{ once: true, amount: 0.1 }}
-      className="relative py-32 lg:py-44 bg-[#000000] z-30"
+      className="relative py-32 lg:py-44 bg-[#000000] z-20"
     >
-      {/* Sticky section label — like // Intro */}
-      <div className="sticky top-[76px] z-20 w-full bg-[#000000] pointer-events-none">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-4 pb-10">
-          <span
-            className="intro-label font-dm text-sm sm:text-base md:text-lg tracking-wide select-none cursor-pointer pointer-events-auto"
-          >
-            // Projects
-          </span>
-        </div>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+        viewport={{ once: true, amount: 0.1 }}
+      >
+      {/* Center ambient glow matching TechStack */}
+      <div
+        className="absolute top-28 left-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] h-[400px] sm:h-[600px] pointer-events-none z-0"
+        style={{ background: 'radial-gradient(ellipse, rgba(232, 68, 48, 0.08) 0%, transparent 60%)' }}
+      />
 
-      {/* Year label */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-12 md:mb-16 mt-8 flex justify-end">
-        <div className="text-sm tracking-[0.12em] uppercase text-[#888888] font-dm">
+
+
+      {/* Centered header matching TechStack */}
+      <div className="flex flex-col items-center justify-center relative z-10 mb-[56px] px-4">
+
+        <motion.h2
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 0.7, delay: 0.22 }}
+          className="font-syne text-[clamp(44px,7vw,88px)] font-extrabold tracking-[-.045em] leading-[.92] text-center text-white mb-[24px]"
+        >
+          Featured<br />
+          <em
+            className="not-italic inline-block bg-clip-text text-transparent bg-gradient-to-r from-white/20 via-white/80 to-white/20 bg-[length:200%_auto]"
+            style={{ animation: 'gradient 3s linear infinite' }}
+          >
+            Projects
+          </em>
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="text-xs sm:text-sm tracking-[0.16em] uppercase text-[#888888] font-dm text-center"
+        >
           [ 2025 — 2026 ]
-        </div>
+        </motion.div>
       </div>
 
       {/* Project list with cursor-following image */}
@@ -357,6 +379,7 @@ export default function Projects() {
           </motion.div>
         </Link>
       </div>
-    </motion.section>
+      </motion.div>
+    </section>
   );
 }

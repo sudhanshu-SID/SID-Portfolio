@@ -37,6 +37,7 @@ html {
 
 body {
   margin: 0;
+  position: relative;
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-dm);
@@ -72,6 +73,31 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(232, 68, 48, 0.6);
+}
+
+/* macOS-style right scrollbar for the tech stack window */
+.window-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 68, 48, 0.45) transparent;
+}
+
+.window-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.window-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 10px 0;
+}
+
+.window-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(232, 68, 48, 0.45);
+  border-radius: 9999px;
+  border: none;
+}
+
+.window-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 
 /* Custom cursor (optional; used to support cursor-none on CTAs/buttons) */
@@ -164,9 +190,7 @@ a {
 /* Intro section label — underline hover effect */
 .intro-label {
   color: #E84430;
-  position: relative;
   display: inline-block;
-  min-width: 140px;
   padding-bottom: 4px;
 }
 
@@ -226,6 +250,78 @@ html.lenis body {
 
 .lenis-scrolling iframe {
   pointer-events: none;
+}
+
+/* ── Gargi-style liquid hero hover reveal ────────────────────────── */
+@property --r {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
+.hero-reveal-stage {
+  --r: 0px;
+  --mx: 50%;
+  --my: 50%;
+  cursor: pointer;
+}
+
+.hero-reveal-top {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 25;
+  pointer-events: none;
+  -webkit-mask: url(#heroRevealMask);
+  mask: url(#heroRevealMask);
+}
+
+.hero-reveal-stage.is-forced .hero-reveal-top {
+  -webkit-mask: none;
+  mask: none;
+}
+
+.hero-reveal-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 26;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.hero-reveal-stage.is-forced .hero-reveal-svg {
+  display: none;
+}
+
+.reveal-mask-shape,
+.reveal-edge {
+  cx: var(--mx, 50%);
+  cy: var(--my, 50%);
+  r: var(--r, 0px);
+}
+
+.reveal-edge {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.95);
+  stroke-width: 2.5;
+}
+
+.reveal-edge-glow {
+  filter: drop-shadow(0 0 4px rgba(232, 68, 48, 0.9))
+          drop-shadow(0 0 12px rgba(255, 255, 255, 0.6))
+          drop-shadow(0 0 24px rgba(232, 68, 48, 0.4));
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
 }
 
 /* ── Reduced-motion safety net ──────────────────────────────────────
