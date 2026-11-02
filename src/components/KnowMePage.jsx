@@ -39,9 +39,39 @@ export default function KnowMePage() {
             Back Home
           </Link>
 
-          <span className="font-syne font-extrabold text-white tracking-[-0.03em] text-lg">
-            SID.
-          </span>
+          <div className="flex items-center gap-4">
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View Stats (Resume)"
+              className="group relative w-10 h-10 rounded-full border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] hover:border-accent/60 flex items-center justify-center transition-all duration-300 shadow-sm"
+            >
+              <svg
+                className="w-4 h-4 text-white/80 group-hover:text-accent transition-all duration-300 group-hover:scale-110"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <line x1="10" y1="9" x2="8" y2="9" />
+              </svg>
+
+              <span className="pointer-events-none absolute -bottom-9 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-md bg-black/90 border border-white/10 text-[10px] font-dm font-semibold tracking-wider uppercase text-white opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 whitespace-nowrap shadow-xl">
+                View Stats
+              </span>
+            </a>
+
+            <span className="font-syne font-extrabold text-white tracking-[-0.03em] text-lg">
+              SID.
+            </span>
+          </div>
         </div>
       </div>
 

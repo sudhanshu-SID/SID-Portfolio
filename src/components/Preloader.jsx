@@ -13,17 +13,12 @@ const GREETINGS = [
   'Bonjour',     // French
   'こんにちは',    // Japanese
   'Hola',        // Spanish
-  '안녕하세요',     // Korean
   'Ciao',        // Italian
-  'Привет',      // Russian
-  '你好',         // Chinese
-  'Hallo',       // German
-  'مرحبا',       // Arabic
   'Hello',       // English (finale — this word zooms in)
 ];
 
-const HOLD = 190; // ms between greetings while cycling (fast cross-dissolve)
-const FINAL_HOLD = 600; // ms to rest on the last greeting before the zoom
+const HOLD = 140; // ms between greetings while cycling (fast, smooth cross-dissolve)
+const FINAL_HOLD = 400; // ms to rest on the last greeting before the zoom
 const SESSION_KEY = 'sid_preloaded';
 
 const CURSIVE = "'Dancing Script', system-ui, -apple-system, 'Segoe UI', sans-serif";

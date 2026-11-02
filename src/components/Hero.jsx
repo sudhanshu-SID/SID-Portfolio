@@ -40,13 +40,20 @@ export default function Hero() {
   const targetRadius = useRef(0);
   const currentRadius = useRef(0);
   const rafId = useRef(null);
+  const isLoopRunning = useRef(false);
+  const isVisible = useRef(true);
 
-  // Smooth 120fps physics loop for liquid aperture inertia
-  useEffect(() => {
-    let activeLoop = true;
+  // Smooth physics loop for liquid aperture inertia (runs on-demand to save CPU)
+  const startLoopIfNeeded = useCallback(() => {
+    if (isLoopRunning.current || !isVisible.current) return;
+    isLoopRunning.current = true;
 
     const animate = () => {
-      if (!activeLoop) return;
+      if (!isLoopRunning.current || !isVisible.current) {
+        isLoopRunning.current = false;
+        return;
+      }
+
       const el = stageRef.current;
       if (el) {
         // Smoothly interpolate position (0.16 easing for organic glide)
@@ -60,17 +67,54 @@ export default function Hero() {
         el.style.setProperty('--mx', `${currentPos.current.x.toFixed(2)}px`);
         el.style.setProperty('--my', `${currentPos.current.y.toFixed(2)}px`);
         el.style.setProperty('--r', `${currentRadius.current.toFixed(2)}px`);
+
+        // If radius has settled to 0 and target is 0, pause loop to eliminate idle CPU drain
+        if (!forced && targetRadius.current === 0 && currentRadius.current < 0.1) {
+          currentRadius.current = 0;
+          el.style.setProperty('--r', '0px');
+          isLoopRunning.current = false;
+          return;
+        }
       }
+
       rafId.current = requestAnimationFrame(animate);
     };
 
     rafId.current = requestAnimationFrame(animate);
+  }, [forced]);
+
+  // IntersectionObserver to pause loop completely when scrolled away from Hero
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible.current = entry.isIntersecting;
+        if (entry.isIntersecting && (targetRadius.current > 0 || forced || currentRadius.current > 0.1)) {
+          startLoopIfNeeded();
+        } else if (!entry.isIntersecting) {
+          isLoopRunning.current = false;
+          if (rafId.current) cancelAnimationFrame(rafId.current);
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(el);
 
     return () => {
-      activeLoop = false;
+      observer.disconnect();
+      isLoopRunning.current = false;
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
-  }, [forced]);
+  }, [forced, startLoopIfNeeded]);
+
+  useEffect(() => {
+    if (forced) {
+      startLoopIfNeeded();
+    }
+  }, [forced, startLoopIfNeeded]);
 
   const updateTarget = useCallback((clientX, clientY) => {
     const el = stageRef.current;
@@ -94,16 +138,19 @@ export default function Hero() {
       }
       const radius = Math.min(Math.max(window.innerWidth * 0.16, 150), 240);
       targetRadius.current = radius;
+      startLoopIfNeeded();
     }
-  }, []);
+  }, [startLoopIfNeeded]);
 
   const onMouseMove = useCallback((e) => {
     updateTarget(e.clientX, e.clientY);
-  }, [updateTarget]);
+    startLoopIfNeeded();
+  }, [updateTarget, startLoopIfNeeded]);
 
   const onMouseLeave = useCallback(() => {
     targetRadius.current = 0;
-  }, []);
+    startLoopIfNeeded();
+  }, [startLoopIfNeeded]);
 
   const onClick = useCallback(() => {
     setForced((f) => !f);

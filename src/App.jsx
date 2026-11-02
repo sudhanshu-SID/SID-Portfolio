@@ -69,14 +69,32 @@ function CursorFX() {
   );
 }
 
+function useIsMobile(breakpoint = 640) {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.innerWidth < breakpoint;
+  });
+
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    const onChange = (e) => setIsMobile(e.matches);
+    setIsMobile(mql.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, [breakpoint]);
+
+  return isMobile;
+}
+
 function HomePage() {
+  const isMobile = useIsMobile(640);
+
   return (
     <>
       <ScrollProgress />
       <Navbar />
       <main className="relative">
-        <MobileHero />
-        <Hero />
+        {isMobile ? <MobileHero /> : <Hero />}
         <ScrollTextReveal />
         <Projects />
 
@@ -106,13 +124,13 @@ export default function App() {
       <ReactLenis
         root
         options={{
-          // Frame-rate-independent premium glide, tuned tight & precise
-          // (expo-out easing = Lenis's own default curve).
+          // Frame-rate-independent premium glide on desktop; native 120Hz momentum on touch
           duration: 0.85,
           easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
           wheelMultiplier: 1.0,
-          touchMultiplier: 1.5,
+          touchMultiplier: 0,
           smoothWheel: true,
+          syncTouch: false,
         }}
       >
         <div className="min-h-screen bg-[#000000] text-[#F5F5F5] relative" style={{ overflowX: 'clip' }}>

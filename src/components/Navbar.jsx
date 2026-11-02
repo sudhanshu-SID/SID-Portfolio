@@ -144,12 +144,68 @@ export default function Navbar() {
                 </a>
               );
             })}
+
+            {/* Desktop View Stats (Resume) Icon Button */}
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View Stats (Resume)"
+              className="group relative w-10 h-10 rounded-full border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] hover:border-accent/60 flex items-center justify-center transition-all duration-300 shadow-sm ml-2"
+            >
+              <svg
+                className="w-4 h-4 text-white/80 group-hover:text-accent transition-all duration-300 group-hover:scale-110"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <line x1="10" y1="9" x2="8" y2="9" />
+              </svg>
+
+              {/* Floating Tooltip */}
+              <span className="pointer-events-none absolute -bottom-9 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-md bg-black/90 border border-white/10 text-[10px] font-dm font-semibold tracking-wider uppercase text-white opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 whitespace-nowrap shadow-xl">
+                View Stats
+              </span>
+            </a>
           </div>
 
-          {/* Animated Hamburger/Cross Menu Button */}
-          <button
-            type="button"
-            className="lg:hidden relative z-[120] flex flex-col items-center justify-center w-10 h-10 gap-[5px] focus:outline-none"
+          {/* Mobile Right Controls: View Stats Icon Button + Hamburger Button */}
+          <div className="flex items-center gap-3 lg:hidden relative z-[120]">
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View Stats (Resume)"
+              className="w-10 h-10 rounded-full border border-white/15 bg-white/[0.04] active:scale-95 flex items-center justify-center transition-all shadow-sm"
+            >
+              <svg
+                className="w-4 h-4 text-white/80 active:text-accent transition-colors"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <line x1="10" y1="9" x2="8" y2="9" />
+              </svg>
+            </a>
+
+            {/* Animated Hamburger/Cross Menu Button */}
+            <button
+              type="button"
+              className="flex flex-col items-center justify-center w-10 h-10 gap-[5px] focus:outline-none"
             onClick={() => setOpen(!open)}
             aria-label={open ? "Close menu" : "Open menu"}
           >
@@ -170,7 +226,8 @@ export default function Navbar() {
             />
           </button>
         </div>
-      </motion.nav>
+      </div>
+    </motion.nav>
 
       <AnimatePresence>
         {open && (
@@ -260,6 +317,57 @@ export default function Navbar() {
                   </Component>
                 );
               })}
+
+              {/* Resume / View Stats card inside mobile drawer */}
+              <motion.a
+                variants={itemVariants}
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="group relative block w-full border border-accent/30 bg-accent/[0.06] hover:bg-accent/10 rounded-2xl p-4 overflow-hidden transition-all duration-300 mt-2"
+              >
+                <div className="relative z-10 flex items-center justify-between w-full">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-9 h-9 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center text-white/80">
+                      <svg
+                        className="w-4 h-4 text-white/80"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <line x1="10" y1="9" x2="8" y2="9" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="font-dm font-bold text-lg tracking-wide uppercase text-white flex items-center gap-2">
+                        VIEW STATS
+                      </span>
+                      <span className="block text-[10px] text-white/50 font-dm tracking-[0.14em] uppercase mt-0.5">
+                        Resume
+                      </span>
+                    </div>
+                  </div>
+                  <div className="w-9 h-9 rounded-full border border-accent/40 bg-accent/10 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2.5}
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                  </div>
+                </div>
+              </motion.a>
             </div>
 
             {/* Glowing line & tagline at footer */}

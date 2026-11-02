@@ -66,8 +66,8 @@ const Word = React.memo(function Word({
   italic,
   breakBefore,
 }) {
-  const opacity = useTransform(progress, [rangeStart, rangeEnd], [0.14, 1]);
-  const y = useTransform(progress, [rangeStart, rangeEnd], [6, 0]);
+  const opacity = useTransform(progress, [rangeStart, rangeEnd], [0.14, 1], { clamp: true });
+  const y = useTransform(progress, [rangeStart, rangeEnd], [6, 0], { clamp: true });
 
   return (
     <>
@@ -106,7 +106,7 @@ export default function ScrollTextReveal({ className = '' }) {
   const smooth = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.0005,
+    restDelta: 0.001,
   });
 
   const words = useMemo(() => buildWords(SEGMENTS), []);

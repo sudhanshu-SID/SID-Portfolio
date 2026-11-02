@@ -8,21 +8,29 @@ const NameBadge = () => {
   const rotateXVal = useTransform(springX, [-80, 80], [-5, 5]);
 
   useEffect(() => {
+    let raf = 0;
     const handleMouseMove = (e) => {
-      const ratio = (e.clientX / window.innerWidth) * 2 - 1; // Range: [-1, 1]
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const ratio = (e.clientX / window.innerWidth) * 2 - 1; // Range: [-1, 1]
 
-      let maxShift = 80;
-      if (window.innerWidth < 768) {
-        maxShift = 30;
-      } else if (window.innerWidth < 1024) {
-        maxShift = 50;
-      }
+        let maxShift = 80;
+        if (window.innerWidth < 768) {
+          maxShift = 30;
+        } else if (window.innerWidth < 1024) {
+          maxShift = 50;
+        }
 
-      mouseX.set(ratio * maxShift);
+        mouseX.set(ratio * maxShift);
+      });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, [mouseX]);
 
   return (
