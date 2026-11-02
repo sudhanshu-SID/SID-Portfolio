@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -8,30 +8,46 @@ import { getCloudinaryUrl } from '../utils/cloudinary';
 const allProjects = [
   {
     id: '01',
+    title: 'Get-it-done',
+    year: '2026',
+    category: 'Productivity',
+    tagline: 'Anti-Procrastination Task Manager',
+    tech: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'TailwindCSS'],
+    video: getCloudinaryUrl('get-it-done_DEMO', 'video'),
+    image: getCloudinaryUrl('get-it-done-poster', 'image'),
+    href: 'https://github.com/sudhanshu-SID/Get-it-done',
+    description:
+      'A brutalist, anti-procrastination task manager designed for maximum focus, strict timeboxing, dynamic goals, and severe accountability systems with automated penalty strikes.',
+    color: '#E84430',
+  },
+  {
+    id: '02',
     title: 'YumeCav',
     year: '2025',
     category: 'E-commerce',
     tagline: 'Elevate Your Reality',
     tech: ['React', 'TypeScript', 'Supabase', 'Razorpay', 'Shiprocket'],
-    image: getCloudinaryUrl('Project-yumecav'),
+    video: getCloudinaryUrl('yumecav_demo', 'video'),
+    image: getCloudinaryUrl('yumecav-poster', 'image'),
     description:
       'A fully customised e-commerce platform selling high-quality posters and stickers with an aesthetic design targeting GenZ audiences. Features B2B selling capabilities, Razorpay payment integration, and Shiprocket logistics. Deployed on Vercel.',
     color: '#9333ea',
   },
   {
-    id: '02',
+    id: '03',
     title: 'The Ideal Firm',
     year: '2025',
     category: 'Corporate',
     tagline: 'Amplify Your Digital Presence',
     tech: ['React', 'TypeScript'],
+    video: getCloudinaryUrl('Ideal_Firm_demo', 'video'),
     image: getCloudinaryUrl('Project-TheidealFirm'),
     description:
       'A clean, professional static site showcasing digital marketing services provided by the company. Integrated with WhatsApp for quick inquiries and a contact form for lead generation.',
     color: '#0ea5e9',
   },
   {
-    id: '03',
+    id: '04',
     title: 'RideWheelz',
     year: '2025',
     category: 'Vehicle Rental',
@@ -43,7 +59,7 @@ const allProjects = [
     color: '#f97316',
   },
   {
-    id: '04',
+    id: '05',
     title: 'The Country Wheels',
     year: '2025',
     category: 'Vehicle Rental',
@@ -54,37 +70,14 @@ const allProjects = [
       'Premium bike & car rental website enabling seamless bookings with extended rental hour options. Built with WordPress for easy content management by the business.',
     color: '#22c55e',
   },
-  {
-    id: '05',
-    title: 'Tredit',
-    year: '2026',
-    category: 'Travel Community',
-    tagline: 'Explore Through Others\' Eyes',
-    tech: ['MongoDB', 'Express', 'React', 'Node.js'],
-    image: getCloudinaryUrl('Project-Tredit'),
-    description:
-      'An ongoing community-driven platform where travellers become contributors to fellow travellers. Share real-time travel insights, contribute on the way while travelling, and help new explorers discover the world.',
-    color: '#E84430',
-    ongoing: true,
-  },
-  {
-    id: '06',
-    title: 'NutriTrack',
-    year: '2025',
-    category: 'Personal Tool',
-    tagline: 'Track What You Eat',
-    tech: ['HTML', 'CSS', 'JavaScript'],
-    image: getCloudinaryUrl('project-nutriplan'),
-    description:
-      'A personal calorie & nutrition tracker — add food items, view their nutritional values, and monitor your daily intake. Built as a personal utility to stay on top of health goals.',
-    color: '#a855f7',
-    minor: true,
-  },
 ];
 
 /* ── Project Card ────────────────────────────────────────── */
 function ProjectCard({ project, index }) {
   const cardRef = useRef(null);
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const { scrollYProgress } = useScroll({
     target: cardRef,
     offset: ['start end', 'end start'],
@@ -92,6 +85,41 @@ function ProjectCard({ project, index }) {
 
   const imgY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
   const imgScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.1, 1, 1.05]);
+
+  const handleMouseEnter = () => {
+    if (window.innerWidth >= 768 && window.matchMedia('(hover: hover)').matches && project.video) {
+      setIsPlaying(true);
+      if (videoRef.current) {
+        videoRef.current.play().catch(() => {});
+      }
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (window.innerWidth >= 768 && window.matchMedia('(hover: hover)').matches && project.video) {
+      setIsPlaying(false);
+      if (videoRef.current) {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+      }
+    }
+  };
+
+  const handleClick = () => {
+    if (project.video) {
+      const isMobile = window.innerWidth < 768 || window.matchMedia('(hover: none)').matches;
+      if (isMobile) {
+        if (isPlaying) {
+          videoRef.current?.pause();
+          videoRef.current.currentTime = 0;
+          setIsPlaying(false);
+        } else {
+          setIsPlaying(true);
+          videoRef.current?.play().catch(() => {});
+        }
+      }
+    }
+  };
 
   return (
     <motion.div
@@ -106,44 +134,81 @@ function ProjectCard({ project, index }) {
       viewport={{ once: true, amount: 0.15 }}
       className="group relative"
     >
-      {/* Image Container */}
-      <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/[0.06] bg-[#0a0a0a]">
-        {project.image ? (
-          <motion.img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            style={{ y: imgY, scale: imgScale }}
-            draggable={false}
-          />
-        ) : (
-          /* Gradient placeholder for projects without images */
-          <div
-            className="w-full h-full flex items-center justify-center"
-            style={{
-              background: `linear-gradient(135deg, ${project.color}15 0%, ${project.color}08 50%, #0a0a0a 100%)`,
-            }}
-          >
-            <div className="text-center">
-              <div
-                className="font-syne font-extrabold text-6xl md:text-8xl tracking-tighter"
-                style={{ color: `${project.color}30` }}
-              >
-                {project.title}
+      {/* Media / Video / Image Container */}
+      <div
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className={`relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/[0.06] bg-[#0a0a0a] ${
+          project.video ? 'cursor-pointer' : ''
+        }`}
+      >
+        <motion.div
+          className="w-full h-full relative"
+          style={{ y: imgY, scale: imgScale }}
+        >
+          {project.image ? (
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              draggable={false}
+            />
+          ) : (
+            /* Gradient placeholder for projects without images */
+            <div
+              className="w-full h-full flex items-center justify-center"
+              style={{
+                background: `linear-gradient(135deg, ${project.color}15 0%, ${project.color}08 50%, #0a0a0a 100%)`,
+              }}
+            >
+              <div className="text-center">
+                <div
+                  className="font-syne font-extrabold text-6xl md:text-8xl tracking-tighter"
+                  style={{ color: `${project.color}30` }}
+                >
+                  {project.title}
+                </div>
+                <div className="mt-4 font-dm text-sm text-white/30 tracking-wide">
+                  {project.tagline}
+                </div>
               </div>
-              <div className="mt-4 font-dm text-sm text-white/30 tracking-wide">
-                {project.tagline}
-              </div>
+            </div>
+          )}
+
+          {project.video && (
+            <video
+              ref={videoRef}
+              src={project.video}
+              poster={project.image}
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 transition-transform duration-700 group-hover:scale-105 ${
+                isPlaying ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              }`}
+            />
+          )}
+        </motion.div>
+
+        {/* Center play icon for video projects when not playing */}
+        {project.video && !isPlaying && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300">
+            <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-2xl text-white/90 transition-transform duration-300 group-hover:scale-110">
+              <svg className="w-5 h-5 md:w-6 md:h-6 translate-x-0.5 fill-current text-white/90" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
             </div>
           </div>
         )}
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
         {/* Project number — large watermark */}
         <div
-          className="absolute top-6 right-8 font-syne font-extrabold text-7xl md:text-9xl leading-none pointer-events-none transition-opacity duration-500"
+          className="absolute top-6 right-8 font-syne font-extrabold text-7xl md:text-9xl leading-none pointer-events-none transition-opacity duration-500 select-none"
           style={{ color: `${project.color}12` }}
         >
           {project.id}
@@ -151,7 +216,7 @@ function ProjectCard({ project, index }) {
 
         {/* Ongoing badge */}
         {project.ongoing && (
-          <div className="absolute top-6 left-6">
+          <div className="absolute top-6 left-6 pointer-events-none">
             <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-dm font-medium text-emerald-400 border border-emerald-400/30 rounded-full px-3 py-1.5 bg-black/60 backdrop-blur-md">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               In Progress
@@ -161,15 +226,30 @@ function ProjectCard({ project, index }) {
 
         {/* Minor project badge */}
         {project.minor && (
-          <div className="absolute top-6 left-6">
+          <div className="absolute top-6 left-6 pointer-events-none">
             <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-dm font-medium text-white/50 border border-white/10 rounded-full px-3 py-1.5 bg-black/60 backdrop-blur-md">
               Personal Project
             </span>
           </div>
         )}
 
+        {/* Video indicator badge */}
+        {project.video && (
+          <div className="absolute top-6 left-6 pointer-events-none">
+            <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest font-dm font-medium text-white/90 border border-white/20 rounded-full px-3.5 py-1.5 bg-black/60 backdrop-blur-md shadow-lg shadow-black/40">
+              <span className={`w-2 h-2 rounded-full ${isPlaying ? 'bg-[#E84430] animate-pulse' : 'bg-white/40'}`} />
+              <span className="hidden sm:inline">
+                {isPlaying ? 'Live Demo Preview' : 'Hover for Video'}
+              </span>
+              <span className="inline sm:hidden">
+                {isPlaying ? 'Live Demo Preview' : 'Tap for Video'}
+              </span>
+            </span>
+          </div>
+        )}
+
         {/* Bottom hover info */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none">
           <p className="font-dm text-sm text-white/80 leading-relaxed max-w-2xl">
             {project.description}
           </p>

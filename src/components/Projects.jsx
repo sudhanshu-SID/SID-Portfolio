@@ -9,26 +9,39 @@ import { getCloudinaryUrl } from '../utils/cloudinary';
 const projects = [
   {
     id: '01',
+    title: 'Get-it-done',
+    year: '2026',
+    category: 'Productivity · Task Manager',
+    tech: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'TailwindCSS'],
+    href: 'https://github.com/sudhanshu-SID/Get-it-done',
+    video: getCloudinaryUrl('get-it-done_DEMO', 'video'),
+    image: getCloudinaryUrl('get-it-done-poster', 'image'),
+    description: 'A brutalist, anti-procrastination task manager designed for maximum focus, strict timeboxing, accountability systems, and automated penalty strikes.',
+  },
+  {
+    id: '02',
     title: 'YumeCav',
     year: '2025',
     category: 'E-commerce · Posters & Stickers',
     tech: ['React', 'TypeScript', 'Supabase', 'Razorpay'],
     href: '#',
-    image: getCloudinaryUrl('Project-yumecav'),
+    video: getCloudinaryUrl('yumecav_demo', 'video'),
+    image: getCloudinaryUrl('yumecav-poster', 'image'),
     description: 'Fully customised high-quality posters & stickers e-commerce platform with aesthetic GenZ-targeted design, B2B support, Razorpay payments & Shiprocket logistics.',
   },
   {
-    id: '02',
+    id: '03',
     title: 'The Ideal Firm',
     year: '2025',
     category: 'Corporate · Digital Marketing',
     tech: ['React', 'TypeScript'],
     href: '#',
+    video: getCloudinaryUrl('Ideal_Firm_demo', 'video'),
     image: getCloudinaryUrl('Project-TheidealFirm'),
     description: 'Static corporate site showcasing digital marketing services with WhatsApp & form integration for seamless client inquiries.',
   },
   {
-    id: '03',
+    id: '04',
     title: 'RideWheelz',
     year: '2025',
     category: 'Vehicle Rental · Travel',
@@ -38,7 +51,7 @@ const projects = [
     description: 'Vehicle rental platform with integrated travel plans, built for a self-drive rental business in Guwahati.',
   },
   {
-    id: '04',
+    id: '05',
     title: 'The Country Wheels',
     year: '2025',
     category: 'Vehicle Rental · Business',
@@ -46,28 +59,6 @@ const projects = [
     href: '#',
     image: getCloudinaryUrl('Project-countryWheels'),
     description: 'Premium bike & car rental website enabling seamless bookings from home with extended rental hour options.',
-  },
-  {
-    id: '05',
-    title: 'Tredit',
-    year: '2026',
-    category: 'Travel · Community · In Progress',
-    tech: ['MongoDB', 'Express', 'React', 'Node.js'],
-    href: '#',
-    image: getCloudinaryUrl('Project-Tredit'),
-    description: 'A community-driven platform where travellers become contributors, sharing real-time travel insights and helping fellow explorers.',
-    ongoing: true,
-  },
-  {
-    id: '06',
-    title: 'NutriTrack',
-    year: '2025',
-    category: 'Health · Personal Tool',
-    tech: ['HTML', 'CSS', 'JavaScript'],
-    href: '#',
-    image: getCloudinaryUrl('project-nutriplan'),
-    description: 'A personal calorie & nutrition tracker — add food items, view their nutritional values, and monitor your daily intake to stay on top of your health goals.',
-    minor: true,
   },
 ];
 
@@ -250,8 +241,8 @@ export default function Projects() {
     mouseY.set(e.clientY - rect.top);
   };
 
-  const currentImage =
-    hoveredIndex !== null ? projects[hoveredIndex]?.image : null;
+  const currentProject =
+    hoveredIndex !== null ? projects[hoveredIndex] : null;
 
   return (
     <section
@@ -326,9 +317,9 @@ export default function Projects() {
           />
         ))}
 
-        {/* Cursor-following reveal image */}
+        {/* Cursor-following reveal image/video */}
         <AnimatePresence>
-          {hoveredIndex !== null && currentImage && (
+          {hoveredIndex !== null && currentProject && (
             <motion.div
               className="absolute top-0 left-0 z-40 pointer-events-none"
               style={{
@@ -346,18 +337,31 @@ export default function Projects() {
                 rotate: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
               }}
             >
-              <div className="w-[300px] md:w-[380px] aspect-[16/10] rounded-xl overflow-hidden shadow-2xl shadow-black/70 border border-white/[0.08] ring-1 ring-accent/10">
-                <motion.img
-                  key={currentImage}
-                  src={currentImage}
-                  alt=""
-                  className="w-full h-full object-cover"
-                  draggable={false}
-                  initial={{ scale: 1.15, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 1.1, opacity: 0 }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                />
+              <div className="w-[300px] md:w-[380px] aspect-[16/10] rounded-xl overflow-hidden shadow-2xl shadow-black/70 border border-white/[0.08] ring-1 ring-accent/10 bg-black">
+                {currentProject.video ? (
+                  <video
+                    src={currentProject.video}
+                    poster={currentProject.image}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <motion.img
+                    key={currentProject.image}
+                    src={currentProject.image}
+                    alt=""
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                    initial={{ scale: 1.15, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 1.1, opacity: 0 }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                  />
+                )}
               </div>
             </motion.div>
           )}
